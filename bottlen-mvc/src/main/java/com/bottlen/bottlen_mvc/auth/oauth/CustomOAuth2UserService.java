@@ -1,9 +1,11 @@
 package com.bottlen.bottlen_mvc.auth.oauth;
 
-import com.bottlen.bottlen_mvc.auth.oauth.dto.GoogleRes;
-import com.bottlen.bottlen_mvc.auth.oauth.dto.NaverRes;
-import com.bottlen.bottlen_mvc.auth.oauth.dto.KakaoRes;
-import com.bottlen.bottlen_mvc.auth.oauth.dto.OAuth2Res;
+import com.bottlen.bottlen_mvc.auth.oauth.dto.*;
+import com.bottlen.bottlen_mvc.user.domain.AuthProvider;
+import com.bottlen.bottlen_mvc.user.domain.Role;
+import com.bottlen.bottlen_mvc.user.domain.User;
+import com.bottlen.bottlen_mvc.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -12,7 +14,11 @@ import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+
+    private final UserRepository userRepository;
+
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -31,7 +37,37 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             default -> throw new OAuth2AuthenticationException("Unsupported provider: " + registrationId);
         }
 
-        // 우리가 만든 CustomOAuth2User로 감싸서 반환
-        return new CustomOAuth2User(oAuth2Response, oAuth2User.getAttributes());
+        // DTO 생성
+        OAuthUserDto dto = OAuthUserDto.builder()
+                .provider(oAuth2Response.getProvider())
+                .providerId(oAuth2Response.getProviderId())
+                .email(oAuth2Response.getEmail())
+                .nickname(oAuth2Response.getName())
+                .role(Role.ROLE_USER)
+                .build();
+
+        // DB 저장 or 업데이트
+        User user = userRepository.findByProviderAndProviderId(
+                AuthProvider.valueOf(dto.getProvider().toUpperCase()),
+                dto.getProviderId()
+        ).map(existing -> {
+            // 이미 있는 유저 → 프로필 갱신
+            existing.updateProfile(dto.getEmail(), dto.getNickname());
+            return existing;
+        }).orElseGet(() ->
+                // 신규 유저 생성
+                User.createOAuthUser(
+                        AuthProvider.valueOf(dto.getProvider().toUpperCase()),
+                        dto.getProviderId(),
+                        dto.getEmail(),
+                        dto.getNickname()
+                )
+        );
+
+        userRepository.save(user);
+
+        // SecurityContext에 등록할 객체 반환
+        return new CustomOAuth2User(dto);
+
     }
 }

@@ -35,7 +35,7 @@ public class NaverRes implements OAuth2Res{
     @Override
     public String getName() {
 
-        return attribute.get("name").toString();
+        return attribute.get("nickname").toString();
     }
 
     @Override
