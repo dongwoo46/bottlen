@@ -1,69 +1,97 @@
 package com.bottlen.bottlen_mvc.auth.jwt;
 
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Component
 public class JwtUtil {
 
-    private SecretKey secretKey;
+    private final SecretKey secretKey;
+
     public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
-        this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String getEmail(String token) {
+    // ==========================
+    // 공통 Claims 파싱
+    // ==========================
+    private Claims getClaims(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload()
-                .get("email", String.class);
+                .getPayload();
+    }
+
+    // ==========================
+    // Getter 메서드
+    // ==========================
+    public String getEmail(String token) {
+        return getClaims(token).get("email", String.class);
     }
 
     public String getRole(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .get("role", String.class);
+        return getClaims(token).get("role", String.class);
     }
 
     public String getGlobalId(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .get("globalId", String.class);
+        return getClaims(token).get("globalId", String.class);
     }
 
-    public Boolean isExpired(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getExpiration()
-                .before(new Date());
+    public Long getUserId(String token) {
+        return getClaims(token).get("userId", Long.class);
     }
 
-    public String createJwt(String email, String globalId, String role, Long expiredMs) {
+    public boolean isExpired(String token) {
+        try {
+            return getClaims(token).getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
+    }
+
+    // ==========================
+    // JWT 생성
+    // ==========================
+    public String createJwt(Long userId, String email, String globalId, String role, long expiredMs) {
+        Date now = new Date();
         return Jwts.builder()
+                .claim("userId", userId)
                 .claim("email", email)
-                .claim("globalId", globalId)  // provider_providerId
+                .claim("globalId", globalId)
                 .claim("role", role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expiredMs))
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + expiredMs))
                 .signWith(secretKey)
                 .compact();
     }
 
+    // ==========================
+    // 토큰 유효성 검증
+    // ==========================
+    public boolean validateToken(String token) {
+        try {
+            return !isExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // ==========================
+    // 권한 변환 (필터용)
+    // ==========================
+    public List<SimpleGrantedAuthority> getAuthorities(String role) {
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
+    }
 }

@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // JPA 쿼리 메서드: provider와 providerId로 사용자 조회
     Optional<User> findByProviderAndProviderId(AuthProvider provider, String providerId);
+    Optional<User> findByPhone(String phone);
+    Optional<User> findByNickname(String nickname);
+
 }

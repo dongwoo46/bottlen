@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "users",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"provider", "providerId"})
+        indexes = {
+                @Index(columnList = "provider, providerId") // 조회 최적화용 인덱스
+        }
 )
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,12 +31,18 @@ public class User {
     @Column(nullable = false)
     private String providerId;
 
-    @Column(unique = true)
-    private String email;
+    @Column(unique = true, nullable = true)
+    private String email;  // 유니크 제거, nullable 허용 가능
 
+    // 닉네임은 추가정보 입력 단계에서 저장
+    @Column(unique = true, nullable = true, length = 50)
     private String nickname;
 
     private String profileImageUrl;
+
+    // 휴대전화번호 (인증 후 저장)
+    @Column(unique = true, nullable = true)
+    private String phone;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -58,31 +66,27 @@ public class User {
 
     // --- 도메인 메서드 ---
 
-    /**
-     * 프로필 정보 변경
-     */
-    public void updateProfile(String email, String nickname) {
+    public void updateEmail(String email) {
         this.email = email;
-        this.nickname = nickname;
     }
 
-    /**
-     * 역할 변경
-     */
+    public void updateExtraInfo(String nickname, String profileImageUrl, String phone) {
+        this.nickname = nickname;
+        this.profileImageUrl = profileImageUrl;
+        this.phone = phone;
+    }
+
     public void changeRole(Role role) {
         this.role = role;
     }
 
-    /**
-     * 소셜 로그인 신규 사용자 팩토리
-     */
-    public static User createOAuthUser(AuthProvider provider, String providerId, String email, String nickname) {
+    public static User createOAuthUser(AuthProvider provider, String providerId, String email) {
         return User.builder()
                 .provider(provider)
                 .providerId(providerId)
                 .email(email)
-                .nickname(nickname)
                 .role(Role.ROLE_USER)
                 .build();
     }
 }
+
