@@ -13,6 +13,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
+        log.error("[BusinessException] code={}, message={}, data={}",
+                e.getCode(), e.getMessage(), e.getData(), e);
         return ResponseEntity
                 .status(e.getStatus())
                 .body(ErrorResponse.of(
@@ -25,6 +27,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception e) {
+        // 전체 스택 트레이스까지 로깅
+        log.error("[Exception] message={}", e.getMessage(), e);
         return ResponseEntity
                 .status(500)
                 .body(ErrorResponse.builder()

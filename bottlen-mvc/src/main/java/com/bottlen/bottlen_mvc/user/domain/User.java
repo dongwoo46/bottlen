@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "users",
-        indexes = {
-                @Index(columnList = "provider, providerId") // 조회 최적화용 인덱스
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"provider", "providerId"})
         }
 )
 @Getter

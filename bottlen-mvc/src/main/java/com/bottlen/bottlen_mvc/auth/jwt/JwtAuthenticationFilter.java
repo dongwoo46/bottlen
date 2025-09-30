@@ -1,5 +1,8 @@
 package com.bottlen.bottlen_mvc.auth.jwt;
 
+import com.bottlen.bottlen_mvc.auth.oauth.CustomOAuth2User;
+import com.bottlen.bottlen_mvc.auth.oauth.dto.OAuthUserDto;
+import com.bottlen.bottlen_mvc.user.domain.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,13 +43,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
                 Long userId = jwtUtil.getUserId(token);
                 String email = jwtUtil.getEmail(token);
+                String globalId = jwtUtil.getGlobalId(token);
                 String role = jwtUtil.getRole(token);
 
+                // 3. OAuthUserDto 생성
+                OAuthUserDto userDto = OAuthUserDto.builder()
+                        .userId(userId)
+                        .email(email)
+                        .globalId(globalId)
+                        .role(Role.valueOf(role))
+                        .build();
+
+                // 4. CustomOAuth2User 생성 (UserDetails 구현체)
+                CustomOAuth2User customUser = new CustomOAuth2User(userDto);
+
+                // 5. 인증 토큰 생성 및 SecurityContext 등록
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                userId,
+                                customUser,
                                 null,
-                                jwtUtil.getAuthorities(role)
+                                customUser.getAuthorities()
                         );
 
                 authentication.setDetails(
