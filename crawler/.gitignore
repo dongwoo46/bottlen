@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Virtualenv
+venv/
+env/
+.venv/
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# Logs / Temp
+*.log
+*.tmp
+
+# Environment variables
+.env
+
+# Output JSON (크롤링 결과 저장 파일)
+articles_summary.json
+
+.env
+sa_cookies.json
+
+# output
+articles_summary.json
