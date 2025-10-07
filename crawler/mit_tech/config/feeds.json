@@ -1,0 +1,9 @@
+{
+  "main": "https://www.technologyreview.com/feed/",
+  "topics": {
+    "artificial-intelligence": "https://www.technologyreview.com/topic/artificial-intelligence/feed/",
+    "biotechnology": "https://www.technologyreview.com/topic/biotechnology/feed/",
+    "computing": "https://www.technologyreview.com/topic/computing/feed/",
+    "policy": "https://www.technologyreview.com/topic/policy/feed/"
+  }
+}
