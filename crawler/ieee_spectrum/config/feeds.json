@@ -1,0 +1,14 @@
+{
+  "main": "https://spectrum.ieee.org/rss/fulltext",
+  "topics": {
+    "robotics": "https://spectrum.ieee.org/rss/robotics/fulltext",
+    "ai": "https://spectrum.ieee.org/rss/artificial-intelligence/fulltext",
+    "semiconductors": "https://spectrum.ieee.org/rss/semiconductors/fulltext",
+    "energy": "https://spectrum.ieee.org/rss/energy/fulltext",
+    "automotive": "https://spectrum.ieee.org/rss/transportation/fulltext",
+    "computing": "https://spectrum.ieee.org/rss/computing/fulltext",
+    "biomedical": "https://spectrum.ieee.org/rss/biomedical/fulltext",
+    "telecom": "https://spectrum.ieee.org/rss/telecom/fulltext",
+    "aerospace": "https://spectrum.ieee.org/rss/aerospace/fulltext",
+  }
+}

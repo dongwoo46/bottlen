@@ -1,6 +1,5 @@
 import time
-from shared.logger_config import logger
-from mit_tech.src.mit_collector import run_cycle
+from ieee_collector import run_cycle
 
 INTERVAL = 3600  # 1시간
 YELLOW = "\033[93m"
@@ -10,15 +9,12 @@ RESET = "\033[0m"
 def main():
     while True:
         try:
-            run_cycle()
+            run_cycle()  # 내부에서 모든 로그 출력 처리
             print(f"🕒 Waiting {INTERVAL // 60} minutes for next update...\n")
             time.sleep(INTERVAL)
         except KeyboardInterrupt:
             print(f"\n{YELLOW}🛑 Stopped by user.{RESET}")
             break
-        except Exception as e:
-            logger.error(f"[main loop] Unexpected error: {e}")
-            time.sleep(30)
 
 
 if __name__ == "__main__":
