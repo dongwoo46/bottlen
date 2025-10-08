@@ -5,14 +5,15 @@ import feedparser
 from bs4 import BeautifulSoup
 from shared.utils import save_json, get_data_dir
 from shared.logger_config import logger
-from shared.bloom_filter import BloomFilter        # ✅ RedisBloom
-from shared.hash_utils import generate_hash_id     # ✅ 해시 ID 생성기
+from shared.bloom_filter import BloomFilter
+from shared.hash_utils import generate_hash_id  # ✅ 해시 유틸 사용
 
 # ───────────────────────────────
 # 기본 설정
 # ───────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = get_data_dir("ieee_spectrum")
+CONFIG_DIR = os.path.join(BASE_DIR, "../config")
+DATA_DIR = get_data_dir("ars_technica")
 
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
@@ -22,33 +23,34 @@ RESET = "\033[0m"
 
 # ✅ RedisBloom 초기화
 bloom = BloomFilter(host="localhost", port=6379)
-bloom.ensure_filter("ieee_spectrum")
+bloom.ensure_filter("ars_technica")
 
 # ───────────────────────────────
 # feeds.json 로드
 # ───────────────────────────────
 def load_feeds():
-    """IEEE Spectrum RSS 피드 URL 목록 로드"""
-    path = os.path.join(BASE_DIR, "../config/feeds.json")
+    path = os.path.join(CONFIG_DIR, "feeds.json")
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        feeds = json.load(f)
+        return feeds.get("ars_technica", {})
+
 
 # ───────────────────────────────
 # HTML 정제
 # ───────────────────────────────
 def clean_html(raw_html: str) -> str:
-    """HTML 태그 제거 및 텍스트 정제"""
     if not raw_html:
         return ""
     soup = BeautifulSoup(raw_html, "html.parser")
     text = soup.get_text(separator=" ", strip=True)
     return " ".join(text.split())
 
+
 # ───────────────────────────────
 # RSS 파싱
 # ───────────────────────────────
 def parse_feed(topic: str, url: str):
-    """IEEE Spectrum RSS 피드 파싱 + RedisBloom 중복 제거"""
+    """Ars Technica RSS 파싱 + RedisBloom 중복제거"""
     try:
         feed = feedparser.parse(url)
         if not feed.entries:
@@ -64,26 +66,49 @@ def parse_feed(topic: str, url: str):
             if not link or not title:
                 continue
 
-            # ✅ 고유 해시 생성 (link + title)
+            # ✅ 해시 생성 (link + title)
             article_hash = generate_hash_id(link, title)
 
-            # ✅ RedisBloom 중복 체크
-            if not bloom.add(f"ieee_spectrum:{topic}", article_hash):
+            # ✅ Bloom Filter 중복 체크
+            if not bloom.add(f"ars_technica:{topic}", article_hash):
                 duplicate_count += 1
-                continue  # 중복 → skip
+                continue
 
-            # 요약 정제
+            # 요약
             summary_raw = entry.get("summary", "")
             summary_text = clean_html(summary_raw)
 
-            # 데이터 구성
+            # 본문 일부
+            content_html = ""
+            if "content" in entry and entry.content:
+                content_html = entry.content[0].get("value", "")
+            elif "summary_detail" in entry:
+                content_html = entry.summary_detail.get("value", "")
+            content_text = clean_html(content_html)
+
+            # 대표 이미지
+            image_url = None
+            if "media_content" in entry:
+                image_url = entry.media_content[0].get("url")
+
+            # 카테고리
+            categories = [tag.term for tag in entry.get("tags", [])] if "tags" in entry else []
+
+            # 작성자
+            author = entry.get("author", "")
+            if not author and "dc_creator" in entry:
+                author = entry.get("dc_creator")
+
             articles.append({
-                "id": article_hash,
+                "id": article_hash,  # ✅ 고유 ID 포함
                 "title": title,
                 "link": link,
                 "summary": summary_text,
+                "content": content_text,
                 "published": entry.get("published", ""),
-                "author": entry.get("author", ""),
+                "author": author,
+                "categories": categories,
+                "image_url": image_url,
                 "topic": topic,
                 "collected_at": time.strftime("%Y-%m-%dT%H:%M:%S")
             })
@@ -94,27 +119,22 @@ def parse_feed(topic: str, url: str):
         logger.error(f"[{topic}] RSS 파싱 실패: {e}")
         return [], 0
 
+
 # ───────────────────────────────
 # 수집 루프
 # ───────────────────────────────
 def run_cycle():
-    """IEEE Spectrum RSS 전체 수집 1회 실행"""
     feeds = load_feeds()
-    main_feed = feeds.get("main", "")
-    topics = feeds.get("topics", {})
-
     success_topics, empty_topics = [], []
     duplicate_stats = {}
 
     print(f"{BLUE}────────────────────────────────────────────{RESET}")
-    print(f"{CYAN}IEEE Spectrum Feed Parsing | {time.strftime('%Y-%m-%d %H:%M:%S')}{RESET}")
+    print(f"{CYAN}Ars Technica Feed Parsing | {time.strftime('%Y-%m-%d %H:%M:%S')}{RESET}")
     print(f"{BLUE}────────────────────────────────────────────{RESET}")
 
-    # ------------------------------------------------------
     # main 피드
-    # ------------------------------------------------------
     try:
-        main_articles, dup_count = parse_feed("main", main_feed)
+        main_articles, dup_count = parse_feed("main", feeds.get("main", ""))
         duplicate_stats["main"] = dup_count
         if main_articles:
             save_json(main_articles, os.path.join(DATA_DIR, "main.json"))
@@ -125,9 +145,8 @@ def run_cycle():
         logger.error(f"[main] 수집 실패: {e}")
         empty_topics.append("main")
 
-    # ------------------------------------------------------
     # 나머지 토픽 피드
-    # ------------------------------------------------------
+    topics = feeds.get("topics", {})
     for topic, url in topics.items():
         time.sleep(1)
         try:
@@ -142,9 +161,7 @@ def run_cycle():
             logger.error(f"[{topic}] RSS feed error: {e}")
             empty_topics.append(topic)
 
-    # ------------------------------------------------------
-    # 결과 요약
-    # ------------------------------------------------------
+    # 결과 출력
     print(f"{GREEN}✔ Success".ljust(15) + f"{', '.join(success_topics) or '-'}{RESET}")
     print(f"{YELLOW}⚠ Empty".ljust(15) + f"{', '.join(empty_topics) or '-'}{RESET}")
     print(f"{CYAN}🧠 Duplicates{RESET}".ljust(15))

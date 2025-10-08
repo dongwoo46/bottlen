@@ -1,0 +1,12 @@
+{
+  "ars_technica": {
+    "main": "https://feeds.arstechnica.com/arstechnica/index",
+    "topics": {
+      "science": "https://feeds.arstechnica.com/arstechnica/science",
+      "law": "https://feeds.arstechnica.com/arstechnica/tech-policy",
+      "features": "https://feeds.arstechnica.com/arstechnica/features",
+      "cars": "https://feeds.arstechnica.com/arstechnica/cars",
+      "business": "https://feeds.arstechnica.com/arstechnica/business"
+    }
+  }
+}

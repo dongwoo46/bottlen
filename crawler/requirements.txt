@@ -1,3 +1,6 @@
 requests
 cloudscraper
 python-dotenv
+redisbloom
+feedparser
+redis
