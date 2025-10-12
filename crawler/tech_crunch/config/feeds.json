@@ -1,0 +1,15 @@
+{
+  "techcrunch": {
+    "main": "https://techcrunch.com/feed/",
+    "topics": {
+      "startups": "https://techcrunch.com/category/startups/feed/",
+      "venture": "https://techcrunch.com/category/venture/feed/",
+      "funding": "https://techcrunch.com/tag/funding/feed/",
+      "ai": "https://techcrunch.com/tag/artificial-intelligence/feed/",
+      "cloud": "https://techcrunch.com/tag/cloud-computing/feed/",
+      "fintech": "https://techcrunch.com/category/fintech/feed/",
+      "robotics": "https://techcrunch.com/category/robotics/feed/",
+      "space": "https://techcrunch.com/category/space/feed/"
+    }
+  }
+}

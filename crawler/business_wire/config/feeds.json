@@ -1,0 +1,45 @@
+{
+  "businesswire": {
+    "main": "https://news.google.com/rss/search?q=site:businesswire.com+investment+finance+market&hl=en&gl=US&ceid=US:en",
+    "topics": {
+
+      "finance": "https://news.google.com/rss/search?q=site:businesswire.com+finance+bank+loan+credit+investment+capital&hl=en&gl=US&ceid=US:en",
+      "fintech": "https://news.google.com/rss/search?q=site:businesswire.com+fintech+payment+blockchain+startup&hl=en&gl=US&ceid=US:en",
+      "private_equity": "https://news.google.com/rss/search?q=site:businesswire.com+private+equity+venture+capital+fundraising&hl=en&gl=US&ceid=US:en",
+      "ipo": "https://news.google.com/rss/search?q=site:businesswire.com+IPO+listing+public+offering+SPAC&hl=en&gl=US&ceid=US:en",
+      "mna": "https://news.google.com/rss/search?q=site:businesswire.com+merger+acquisition+buyout+takeover&hl=en&gl=US&ceid=US:en",
+      "earnings": "https://news.google.com/rss/search?q=site:businesswire.com+earnings+results+revenue+profit+quarterly&hl=en&gl=US&ceid=US:en",
+      "credit_rating": "https://news.google.com/rss/search?q=site:businesswire.com+credit+rating+Moody%27s+S%26P+Fitch&hl=en&gl=US&ceid=US:en",
+
+      "ai": "https://news.google.com/rss/search?q=site:businesswire.com+artificial+intelligence+machine+learning+AI&hl=en&gl=US&ceid=US:en",
+      "semiconductor": "https://news.google.com/rss/search?q=site:businesswire.com+semiconductor+chip+NVIDIA+TSMC+Intel+AMD&hl=en&gl=US&ceid=US:en",
+      "software": "https://news.google.com/rss/search?q=site:businesswire.com+software+SaaS+cloud+enterprise+platform&hl=en&gl=US&ceid=US:en",
+      "hardware": "https://news.google.com/rss/search?q=site:businesswire.com+hardware+PC+device+Apple+electronics&hl=en&gl=US&ceid=US:en",
+      "cybersecurity": "https://news.google.com/rss/search?q=site:businesswire.com+cybersecurity+hacking+breach+security&hl=en&gl=US&ceid=US:en",
+      "telecom": "https://news.google.com/rss/search?q=site:businesswire.com+telecom+5G+network+infrastructure&hl=en&gl=US&ceid=US:en",
+      "robotics": "https://news.google.com/rss/search?q=site:businesswire.com+robotics+automation+industry+4.0&hl=en&gl=US&ceid=US:en",
+      "quantum": "https://news.google.com/rss/search?q=site:businesswire.com+quantum+computing+research+IBM+Google&hl=en&gl=US&ceid=US:en",
+
+      "energy": "https://news.google.com/rss/search?q=site:businesswire.com+energy+oil+gas+OPEC+renewable&hl=en&gl=US&ceid=US:en",
+      "renewable": "https://news.google.com/rss/search?q=site:businesswire.com+renewable+solar+wind+hydrogen+clean+energy&hl=en&gl=US&ceid=US:en",
+      "battery": "https://news.google.com/rss/search?q=site:businesswire.com+battery+lithium+EV+electric+vehicle&hl=en&gl=US&ceid=US:en",
+      "nuclear": "https://news.google.com/rss/search?q=site:businesswire.com+nuclear+reactor+SMR+uranium&hl=en&gl=US&ceid=US:en",
+      "metals": "https://news.google.com/rss/search?q=site:businesswire.com+mining+metals+copper+lithium+nickel+rare+earth&hl=en&gl=US&ceid=US:en",
+
+      "automotive": "https://news.google.com/rss/search?q=site:businesswire.com+automotive+EV+car+Tesla+BYD&hl=en&gl=US&ceid=US:en",
+      "manufacturing": "https://news.google.com/rss/search?q=site:businesswire.com+manufacturing+factory+automation+production&hl=en&gl=US&ceid=US:en",
+      "retail": "https://news.google.com/rss/search?q=site:businesswire.com+retail+consumer+e-commerce+spending&hl=en&gl=US&ceid=US:en",
+      "logistics": "https://news.google.com/rss/search?q=site:businesswire.com+logistics+shipping+supply+chain+delivery&hl=en&gl=US&ceid=US:en",
+      "construction": "https://news.google.com/rss/search?q=site:businesswire.com+construction+infrastructure+building+capex&hl=en&gl=US&ceid=US:en",
+      "aerospace": "https://news.google.com/rss/search?q=site:businesswire.com+aerospace+aviation+satellite+space+NASA&hl=en&gl=US&ceid=US:en",
+      "defense": "https://news.google.com/rss/search?q=site:businesswire.com+defense+military+weapons+aerospace+missile&hl=en&gl=US&ceid=US:en",
+
+      "esg": "https://news.google.com/rss/search?q=site:businesswire.com+ESG+sustainability+climate+policy+carbon&hl=en&gl=US&ceid=US:en",
+      "regulation": "https://news.google.com/rss/search?q=site:businesswire.com+regulation+policy+law+compliance&hl=en&gl=US&ceid=US:en",
+      "geopolitics": "https://news.google.com/rss/search?q=site:businesswire.com+geopolitics+war+sanction+conflict+trade&hl=en&gl=US&ceid=US:en",
+      "china_supplychain": "https://news.google.com/rss/search?q=site:businesswire.com+China+supply+chain+exports+manufacturing+ban&hl=en&gl=US&ceid=US:en",
+      "emerging_markets": "https://news.google.com/rss/search?q=site:businesswire.com+emerging+markets+India+Brazil+Vietnam+Mexico&hl=en&gl=US&ceid=US:en",
+      "agriculture": "https://news.google.com/rss/search?q=site:businesswire.com+agriculture+crop+wheat+corn+food+shortage&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

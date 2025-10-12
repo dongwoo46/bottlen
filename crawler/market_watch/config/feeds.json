@@ -1,0 +1,11 @@
+{
+  "marketwatch": {
+    "main": "https://feeds.marketwatch.com/marketwatch/topstories/",
+    "topics": {
+      "top_stories": "https://feeds.marketwatch.com/marketwatch/topstories/",
+      "realtime_headlines": "https://feeds.marketwatch.com/marketwatch/realtimeheadlines/",
+      "marketpulse": "https://feeds.marketwatch.com/marketwatch/marketpulse/",
+      "breaking_news": "https://feeds.marketwatch.com/marketwatch/bulletins/"
+    }
+  }
+}

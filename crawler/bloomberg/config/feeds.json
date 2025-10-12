@@ -1,0 +1,39 @@
+{
+  "bloomberg": {
+    "main": "https://news.google.com/rss/search?q=site:bloomberg.com+global+markets+finance+policy&hl=en&gl=US&ceid=US:en",
+    "topics": {
+
+      "markets": "https://news.google.com/rss/search?q=site:bloomberg.com+markets+stocks+bonds+indices+volatility+investors&hl=en&gl=US&ceid=US:en",
+      "economy": "https://news.google.com/rss/search?q=site:bloomberg.com+economy+GDP+inflation+unemployment+recession&hl=en&gl=US&ceid=US:en",
+      "central_banks": "https://news.google.com/rss/search?q=site:bloomberg.com+Federal+Reserve+ECB+BOJ+rate+policy+hike+cut&hl=en&gl=US&ceid=US:en",
+      "commodities": "https://news.google.com/rss/search?q=site:bloomberg.com+commodities+oil+gas+metals+energy+prices&hl=en&gl=US&ceid=US:en",
+      "bonds_credit": "https://news.google.com/rss/search?q=site:bloomberg.com+bonds+credit+treasury+yields+default+risk&hl=en&gl=US&ceid=US:en",
+      "currencies": "https://news.google.com/rss/search?q=site:bloomberg.com+currencies+forex+dollar+yen+euro+yuan&hl=en&gl=US&ceid=US:en",
+
+      "ai_tech": "https://news.google.com/rss/search?q=site:bloomberg.com+artificial+intelligence+AI+OpenAI+Microsoft+NVIDIA&hl=en&gl=US&ceid=US:en",
+      "semiconductors": "https://news.google.com/rss/search?q=site:bloomberg.com+semiconductors+chip+industry+TSMC+Intel+Samsung&hl=en&gl=US&ceid=US:en",
+      "tech_giants": "https://news.google.com/rss/search?q=site:bloomberg.com+Apple+Google+Amazon+Meta+Tesla+Microsoft&hl=en&gl=US&ceid=US:en",
+      "cloud_computing": "https://news.google.com/rss/search?q=site:bloomberg.com+cloud+computing+AWS+Azure+Google+data+center&hl=en&gl=US&ceid=US:en",
+      "cybersecurity": "https://news.google.com/rss/search?q=site:bloomberg.com+cybersecurity+ransomware+breach+attack+protection&hl=en&gl=US&ceid=US:en",
+      "telecom_5g": "https://news.google.com/rss/search?q=site:bloomberg.com+telecom+5G+network+carrier+infrastructure&hl=en&gl=US&ceid=US:en",
+      "defense_aerospace": "https://news.google.com/rss/search?q=site:bloomberg.com+defense+military+aerospace+missile+Lockheed+Boeing&hl=en&gl=US&ceid=US:en",
+
+      "energy": "https://news.google.com/rss/search?q=site:bloomberg.com+energy+oil+gas+renewables+OPEC+power&hl=en&gl=US&ceid=US:en",
+      "nuclear": "https://news.google.com/rss/search?q=site:bloomberg.com+nuclear+reactor+uranium+SMR+fusion+plant&hl=en&gl=US&ceid=US:en",
+      "battery_ev": "https://news.google.com/rss/search?q=site:bloomberg.com+battery+lithium+EV+electric+vehicle+charging&hl=en&gl=US&ceid=US:en",
+      "green_transition": "https://news.google.com/rss/search?q=site:bloomberg.com+renewable+solar+wind+hydrogen+clean+energy&hl=en&gl=US&ceid=US:en",
+      "metals_mining": "https://news.google.com/rss/search?q=site:bloomberg.com+mining+copper+nickel+lithium+rare+earth&hl=en&gl=US&ceid=US:en",
+
+      "banking": "https://news.google.com/rss/search?q=site:bloomberg.com+banking+loan+credit+JP+Morgan+Citigroup&hl=en&gl=US&ceid=US:en",
+      "hedge_funds": "https://news.google.com/rss/search?q=site:bloomberg.com+hedge+fund+portfolio+asset+management+returns&hl=en&gl=US&ceid=US:en",
+      "private_equity": "https://news.google.com/rss/search?q=site:bloomberg.com+private+equity+venture+capital+fundraising&hl=en&gl=US&ceid=US:en",
+      "ipo_mna": "https://news.google.com/rss/search?q=site:bloomberg.com+IPO+SPAC+merger+acquisition+deal&hl=en&gl=US&ceid=US:en",
+
+      "regulation": "https://news.google.com/rss/search?q=site:bloomberg.com+regulation+SEC+law+policy+compliance&hl=en&gl=US&ceid=US:en",
+      "esg": "https://news.google.com/rss/search?q=site:bloomberg.com+ESG+sustainability+climate+carbon&hl=en&gl=US&ceid=US:en",
+      "china_supply_chain": "https://news.google.com/rss/search?q=site:bloomberg.com+China+supply+chain+exports+tariff+ban&hl=en&gl=US&ceid=US:en",
+      "geopolitics": "https://news.google.com/rss/search?q=site:bloomberg.com+geopolitics+war+sanction+Ukraine+Taiwan+Middle+East&hl=en&gl=US&ceid=US:en",
+      "emerging_markets": "https://news.google.com/rss/search?q=site:bloomberg.com+emerging+markets+India+Brazil+Vietnam+Mexico&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

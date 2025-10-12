@@ -1,0 +1,18 @@
+{
+  "crunchbase": {
+    "main": "https://news.google.com/rss/search?q=site:crunchbase.com+startup+funding+VC+investment+technology&hl=en&gl=US&ceid=US:en",
+    "topics": {
+      "funding_rounds": "https://news.google.com/rss/search?q=site:crunchbase.com+funding+round+seed+Series+A+B+C+fundraising&hl=en&gl=US&ceid=US:en",
+      "venture_capital": "https://news.google.com/rss/search?q=site:crunchbase.com+venture+capital+VC+investor+fund+portfolio&hl=en&gl=US&ceid=US:en",
+      "acquisitions_mergers": "https://news.google.com/rss/search?q=site:crunchbase.com+acquisition+merger+M&A+deal+takeover&hl=en&gl=US&ceid=US:en",
+      "ai_startups": "https://news.google.com/rss/search?q=site:crunchbase.com+AI+artificial+intelligence+generative+AI+deeptech+startup&hl=en&gl=US&ceid=US:en",
+      "fintech": "https://news.google.com/rss/search?q=site:crunchbase.com+fintech+payments+blockchain+DeFi+digital+banking&hl=en&gl=US&ceid=US:en",
+      "healthtech": "https://news.google.com/rss/search?q=site:crunchbase.com+healthtech+biotech+pharma+digital+health&hl=en&gl=US&ceid=US:en",
+      "climatetech": "https://news.google.com/rss/search?q=site:crunchbase.com+climate+cleantech+energy+ESG+sustainability+greentech&hl=en&gl=US&ceid=US:en",
+      "semiconductors": "https://news.google.com/rss/search?q=site:crunchbase.com+semiconductor+chip+hardware+AI+accelerator+foundry&hl=en&gl=US&ceid=US:en",
+      "unicorns_ipo": "https://news.google.com/rss/search?q=site:crunchbase.com+unicorn+IPO+valuation+public+offering+listing&hl=en&gl=US&ceid=US:en",
+      "robotics_automation": "https://news.google.com/rss/search?q=site:crunchbase.com+robotics+automation+industrial+AI+manufacturing&hl=en&gl=US&ceid=US:en",
+      "emerging_markets": "https://news.google.com/rss/search?q=site:crunchbase.com+emerging+markets+India+Southeast+Asia+Africa+Latin+America&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "reuters": {
+    "main": "https://news.google.com/rss/search?q=site:reuters.com+stock+market+investment&hl=en&gl=US&ceid=US:en",
+    "topics": {
+      "markets": "https://news.google.com/rss/search?q=site:reuters.com+markets+stocks+bonds+indices+volatility&hl=en&gl=US&ceid=US:en",
+      "economy": "https://news.google.com/rss/search?q=site:reuters.com+economy+GDP+inflation+interest+rate+Federal+Reserve+ECB+BOJ&hl=en&gl=US&ceid=US:en",
+      "commodities": "https://news.google.com/rss/search?q=site:reuters.com+commodities+oil+gas+gold+copper+lithium+nickel&hl=en&gl=US&ceid=US:en",
+      "forex": "https://news.google.com/rss/search?q=site:reuters.com+forex+currency+dollar+yen+euro+bitcoin&hl=en&gl=US&ceid=US:en",
+      "bonds": "https://news.google.com/rss/search?q=site:reuters.com+bond+yield+treasury+credit+default&hl=en&gl=US&ceid=US:en",
+      "inflation": "https://news.google.com/rss/search?q=site:reuters.com+inflation+CPI+PPI+price+index&hl=en&gl=US&ceid=US:en",
+      "employment": "https://news.google.com/rss/search?q=site:reuters.com+employment+jobs+NFP+unemployment+labor+market&hl=en&gl=US&ceid=US:en",
+      "central_banks": "https://news.google.com/rss/search?q=site:reuters.com+Federal+Reserve+ECB+BOJ+interest+rate+policy&hl=en&gl=US&ceid=US:en",
+      "crisis_risk": "https://news.google.com/rss/search?q=site:reuters.com+financial+crisis+recession+credit+risk+default+debt&hl=en&gl=US&ceid=US:en",
+
+      "earnings": "https://news.google.com/rss/search?q=site:reuters.com+earnings+quarterly+results+guidance+revenue+profit&hl=en&gl=US&ceid=US:en",
+      "ipo": "https://news.google.com/rss/search?q=site:reuters.com+IPO+listing+SPAC+public+offering&hl=en&gl=US&ceid=US:en",
+      "mna": "https://news.google.com/rss/search?q=site:reuters.com+merger+acquisition+takeover+buyout+deal&hl=en&gl=US&ceid=US:en",
+      "buybacks_dividends": "https://news.google.com/rss/search?q=site:reuters.com+buyback+dividend+repurchase+shareholder+payout&hl=en&gl=US&ceid=US:en",
+      "analyst_ratings": "https://news.google.com/rss/search?q=site:reuters.com+analyst+upgrade+downgrade+price+target+recommendation&hl=en&gl=US&ceid=US:en",
+      "credit_rating": "https://news.google.com/rss/search?q=site:reuters.com+credit+rating+Moody%27s+S%26P+Fitch&hl=en&gl=US&ceid=US:en",
+
+      "ai": "https://news.google.com/rss/search?q=site:reuters.com+artificial+intelligence+AI+machine+learning+OpenAI+Google+Microsoft&hl=en&gl=US&ceid=US:en",
+      "semiconductor": "https://news.google.com/rss/search?q=site:reuters.com+semiconductor+chip+NVIDIA+Intel+TSMC+AMD+Samsung&hl=en&gl=US&ceid=US:en",
+      "cloud": "https://news.google.com/rss/search?q=site:reuters.com+cloud+computing+AWS+Azure+Google+data+center&hl=en&gl=US&ceid=US:en",
+      "cybersecurity": "https://news.google.com/rss/search?q=site:reuters.com+cybersecurity+hacking+ransomware+breach&hl=en&gl=US&ceid=US:en",
+      "quantum": "https://news.google.com/rss/search?q=site:reuters.com+quantum+computing+IBM+Google&hl=en&gl=US&ceid=US:en",
+      "telecom": "https://news.google.com/rss/search?q=site:reuters.com+telecom+5G+network+infrastructure&hl=en&gl=US&ceid=US:en",
+      "software": "https://news.google.com/rss/search?q=site:reuters.com+software+enterprise+SaaS+cloud+platform&hl=en&gl=US&ceid=US:en",
+      "hardware": "https://news.google.com/rss/search?q=site:reuters.com+hardware+PC+laptop+smartphone+Apple+device&hl=en&gl=US&ceid=US:en",
+
+      "energy": "https://news.google.com/rss/search?q=site:reuters.com+energy+oil+gas+renewable+OPEC&hl=en&gl=US&ceid=US:en",
+      "nuclear": "https://news.google.com/rss/search?q=site:reuters.com+nuclear+reactor+uranium+SMR&hl=en&gl=US&ceid=US:en",
+      "renewable": "https://news.google.com/rss/search?q=site:reuters.com+renewable+solar+wind+hydrogen+clean+energy&hl=en&gl=US&ceid=US:en",
+      "battery": "https://news.google.com/rss/search?q=site:reuters.com+battery+lithium+EV+electric+vehicle&hl=en&gl=US&ceid=US:en",
+      "metals_mining": "https://news.google.com/rss/search?q=site:reuters.com+metals+mining+copper+nickel+rare+earth&hl=en&gl=US&ceid=US:en",
+      "power_grid": "https://news.google.com/rss/search?q=site:reuters.com+power+grid+electricity+infrastructure+blackout&hl=en&gl=US&ceid=US:en",
+
+      "defense": "https://news.google.com/rss/search?q=site:reuters.com+defense+military+aerospace+weapons+missile&hl=en&gl=US&ceid=US:en",
+      "manufacturing": "https://news.google.com/rss/search?q=site:reuters.com+manufacturing+automation+robotics+factory+industrial&hl=en&gl=US&ceid=US:en",
+      "automotive": "https://news.google.com/rss/search?q=site:reuters.com+automotive+EV+car+Tesla+BYD&hl=en&gl=US&ceid=US:en",
+      "logistics": "https://news.google.com/rss/search?q=site:reuters.com+logistics+shipping+freight+supply+chain&hl=en&gl=US&ceid=US:en",
+      "construction": "https://news.google.com/rss/search?q=site:reuters.com+construction+infrastructure+building+capex&hl=en&gl=US&ceid=US:en",
+      "aerospace": "https://news.google.com/rss/search?q=site:reuters.com+aerospace+space+satellite+SpaceX+Boeing+Lockheed&hl=en&gl=US&ceid=US:en",
+
+      "finance": "https://news.google.com/rss/search?q=site:reuters.com+finance+bank+loan+credit+capital&hl=en&gl=US&ceid=US:en",
+      "fintech": "https://news.google.com/rss/search?q=site:reuters.com+fintech+payment+startup+platform+Stripe+PayPal&hl=en&gl=US&ceid=US:en",
+      "insurance": "https://news.google.com/rss/search?q=site:reuters.com+insurance+reinsurance+claims+payout&hl=en&gl=US&ceid=US:en",
+      "private_equity": "https://news.google.com/rss/search?q=site:reuters.com+private+equity+venture+capital+fundraising&hl=en&gl=US&ceid=US:en",
+      "real_estate": "https://news.google.com/rss/search?q=site:reuters.com+real+estate+housing+mortgage+CRE+property&hl=en&gl=US&ceid=US:en",
+      "retail": "https://news.google.com/rss/search?q=site:reuters.com+retail+consumer+spending+e-commerce+sales&hl=en&gl=US&ceid=US:en",
+      "biotech": "https://news.google.com/rss/search?q=site:reuters.com+biotech+pharma+drug+clinical+trial+FDA&hl=en&gl=US&ceid=US:en",
+
+      "green_policy": "https://news.google.com/rss/search?q=site:reuters.com+climate+policy+ESG+carbon+emission+COP&hl=en&gl=US&ceid=US:en",
+      "ai_regulation": "https://news.google.com/rss/search?q=site:reuters.com+AI+regulation+law+ethics+governance&hl=en&gl=US&ceid=US:en",
+      "china_supplychain": "https://news.google.com/rss/search?q=site:reuters.com+China+supply+chain+exports+manufacturing+ban&hl=en&gl=US&ceid=US:en",
+      "geopolitics": "https://news.google.com/rss/search?q=site:reuters.com+geopolitics+war+sanction+conflict+Taiwan+Ukraine+Middle+East&hl=en&gl=US&ceid=US:en",
+      "regulations": "https://news.google.com/rss/search?q=site:reuters.com+regulation+policy+SEC+EU+antitrust+law&hl=en&gl=US&ceid=US:en",
+      "cyclical_trends": "https://news.google.com/rss/search?q=site:reuters.com+economic+cycle+rotation+recovery+slowdown&hl=en&gl=US&ceid=US:en",
+      "emerging_markets": "https://news.google.com/rss/search?q=site:reuters.com+emerging+markets+India+Brazil+Indonesia+Mexico&hl=en&gl=US&ceid=US:en",
+      "esg": "https://news.google.com/rss/search?q=site:reuters.com+ESG+sustainability+green+investment&hl=en&gl=US&ceid=US:en",
+      "space": "https://news.google.com/rss/search?q=site:reuters.com+space+satellite+SpaceX+NASA+rocket&hl=en&gl=US&ceid=US:en",
+      "agriculture": "https://news.google.com/rss/search?q=site:reuters.com+agriculture+crop+wheat+corn+fertilizer+food+shortage&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

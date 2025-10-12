@@ -1,0 +1,19 @@
+{
+  "economist": {
+    "topics": {
+      "business": "https://www.economist.com/business/rss.xml",
+      "finance_and_economics": "https://www.economist.com/finance-and-economics/rss.xml",
+      "leaders": "https://www.economist.com/leaders/rss.xml",
+      "graphic_detail": "https://www.economist.com/graphic-detail/rss.xml",
+      "free_exchange": "https://www.economist.com/free-exchange/rss.xml",
+      "science_and_technology": "https://www.economist.com/science-and-technology/rss.xml",
+      "china": "https://www.economist.com/china/rss.xml",
+      "united_states": "https://www.economist.com/united-states/rss.xml",
+      "the_americas": "https://www.economist.com/the-americas/rss.xml",
+      "europe": "https://www.economist.com/europe/rss.xml",
+      "asia": "https://www.economist.com/asia/rss.xml",
+      "international": "https://www.economist.com/international/rss.xml",
+      "energy_and_climate": "https://www.economist.com/science-and-technology/rss.xml"
+    }
+  }
+}

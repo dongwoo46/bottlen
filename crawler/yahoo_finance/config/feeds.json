@@ -1,0 +1,23 @@
+{
+  "yahoo_finance": {
+    "main": "https://news.google.com/rss/search?q=site:finance.yahoo.com+stock+market+analysis+outlook&hl=en&gl=US&ceid=US:en",
+    "topics": {
+      "market_overview": "https://news.google.com/rss/search?q=site:finance.yahoo.com+market+update+stocks+bonds+indices+S%26P500+Nasdaq&hl=en&gl=US&ceid=US:en",
+      "earnings_watch": "https://news.google.com/rss/search?q=site:finance.yahoo.com+earnings+results+EPS+quarterly+guidance&hl=en&gl=US&ceid=US:en",
+      "stock_analysis": "https://news.google.com/rss/search?q=site:finance.yahoo.com+stock+analysis+price+target+valuation+upgrade+downgrade&hl=en&gl=US&ceid=US:en",
+      "tech_growth": "https://news.google.com/rss/search?q=site:finance.yahoo.com+AI+semiconductor+NVIDIA+Apple+Tesla+Microsoft+Amazon+Meta&hl=en&gl=US&ceid=US:en",
+      "macro_economy": "https://news.google.com/rss/search?q=site:finance.yahoo.com+inflation+interest+rate+GDP+Federal+Reserve+jobs+data&hl=en&gl=US&ceid=US:en",
+      "energy_transition": "https://news.google.com/rss/search?q=site:finance.yahoo.com+energy+oil+renewable+solar+EV+battery&hl=en&gl=US&ceid=US:en",
+      "defense_industry": "https://news.google.com/rss/search?q=site:finance.yahoo.com+defense+military+contract+Lockheed+Boeing+Raytheon&hl=en&gl=US&ceid=US:en",
+      "nuclear_innovation": "https://news.google.com/rss/search?q=site:finance.yahoo.com+nuclear+reactor+uranium+fusion+SMR&hl=en&gl=US&ceid=US:en",
+      "crypto_digital_assets": "https://news.google.com/rss/search?q=site:finance.yahoo.com+crypto+bitcoin+ethereum+blockchain+ETF&hl=en&gl=US&ceid=US:en",
+      "ipo_spac": "https://news.google.com/rss/search?q=site:finance.yahoo.com+IPO+SPAC+listing+debut&hl=en&gl=US&ceid=US:en",
+      "mna_activity": "https://news.google.com/rss/search?q=site:finance.yahoo.com+merger+acquisition+buyout+deal&hl=en&gl=US&ceid=US:en",
+      "fintech_innovation": "https://news.google.com/rss/search?q=site:finance.yahoo.com+fintech+payment+digital+banking+startup&hl=en&gl=US&ceid=US:en",
+      "etf_funds": "https://news.google.com/rss/search?q=site:finance.yahoo.com+ETF+mutual+fund+portfolio+dividend&hl=en&gl=US&ceid=US:en",
+      "esg_sustainability": "https://news.google.com/rss/search?q=site:finance.yahoo.com+ESG+sustainability+climate+carbon+neutral&hl=en&gl=US&ceid=US:en",
+      "regulation_policy": "https://news.google.com/rss/search?q=site:finance.yahoo.com+SEC+policy+law+regulation+compliance&hl=en&gl=US&ceid=US:en",
+      "global_markets": "https://news.google.com/rss/search?q=site:finance.yahoo.com+Asia+Europe+emerging+markets+China+Japan+India&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

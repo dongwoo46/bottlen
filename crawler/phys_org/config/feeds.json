@@ -1,0 +1,10 @@
+{
+  "physorg": {
+    "main": "https://phys.org/rss-feed/",
+    "topics": {
+      "technology": "https://phys.org/rss-feed/technology-news/",
+      "nanotechnology": "https://phys.org/rss-feed/nanotech-news/",
+      "science": "https://phys.org/rss-feed/science-news/"
+    }
+  }
+}

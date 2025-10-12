@@ -1,0 +1,15 @@
+{
+  "futurism": {
+   "main": "https://futurism.com/feed",
+    "topics": {
+      "ai": "https://futurism.com/categories/ai-artificial-intelligence/feed",
+      "transport": "https://futurism.com/categories/advanced-transport/feed",
+      "space": "https://futurism.com/category/space/feed",
+      "energy": "https://futurism.com/category/energy/feed",
+      "machines": "https://futurism.com/categories/robots-and-machines/feed",
+      "health" : "https://futurism.com/category/health-medicine/feed",
+      "developments": "https://futurism.com/category/developments/feed",
+      "devices": "https://futurism.com/category/devices/feed"
+    }
+   }
+}

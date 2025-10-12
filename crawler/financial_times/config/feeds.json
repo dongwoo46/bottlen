@@ -1,0 +1,17 @@
+{
+  "financial_times": {
+    "main": "https://www.ft.com/news-feed?format=rss",
+    "topics": {
+      "markets": "https://www.ft.com/markets?format=rss",
+      "global_economy": "https://www.ft.com/global-economy?format=rss",
+      "companies": "https://www.ft.com/companies?format=rss",
+      "technology": "https://www.ft.com/technology?format=rss",
+      "energy": "https://www.ft.com/energy?format=rss",
+      "emerging_markets": "https://www.ft.com/emerging-markets?format=rss",
+      "opinion": "https://www.ft.com/opinion?format=rss",
+      "world": "https://www.ft.com/world?format=rss",
+      "alphaville": "https://www.ft.com/alphaville?format=rss",
+      "commodities": "https://www.ft.com/commodities?format=rss"
+    }
+  }
+}

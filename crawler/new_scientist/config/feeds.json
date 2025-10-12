@@ -1,0 +1,13 @@
+{
+  "newscientist": {
+    "topics": {
+      "news": "https://www.newscientist.com/section/news/feed/",
+      "technology": "https://www.newscientist.com/subject/technology/feed/",
+      "physics": "https://www.newscientist.com/subject/physics/feed/",
+      "space": "https://www.newscientist.com/subject/space/feed/",
+      "health": "https://www.newscientist.com/subject/health/feed/",
+      "environment": "https://www.newscientist.com/subject/environment/feed/",
+      "life": "https://www.newscientist.com/subject/life/feed/"
+    }
+  }
+}

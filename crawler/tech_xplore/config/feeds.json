@@ -1,0 +1,14 @@
+{
+  "techxplore": {
+    "main": "https://techxplore.com/rss-feed/",
+    "topics": {
+      "semiconductors": "https://techxplore.com/rss-feed/semiconductors-news/",
+      "energy_green": "https://techxplore.com/rss-feed/energy-green-tech-news/",
+      "engineering": "https://techxplore.com/rss-feed/engineering-news/",
+      "robotics": "https://techxplore.com/rss-feed/robotics-news/",
+      "hardware": "https://techxplore.com/rss-feed/hardware-news/",
+      "internet": "https://techxplore.com/rss-feed/internet-news/",
+      "telecom": "https://techxplore.com/rss-feed/telecom-news/"
+    }
+  }
+}

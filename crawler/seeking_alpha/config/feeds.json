@@ -1,0 +1,31 @@
+{
+  "seekingalpha": {
+    "main": "https://news.google.com/rss/search?q=site:seekingalpha.com+investing+stock+analysis+ideas&hl=en&gl=US&ceid=US:en",
+    "topics": {
+
+      "stock_analysis": "https://news.google.com/rss/search?q=site:seekingalpha.com+stock+analysis+valuation+target+fair+price&hl=en&gl=US&ceid=US:en",
+      "earnings_review": "https://news.google.com/rss/search?q=site:seekingalpha.com+earnings+results+EPS+guidance+quarterly&hl=en&gl=US&ceid=US:en",
+      "dividends": "https://news.google.com/rss/search?q=site:seekingalpha.com+dividend+yield+income+payout+growth&hl=en&gl=US&ceid=US:en",
+      "etf": "https://news.google.com/rss/search?q=site:seekingalpha.com+ETF+fund+index+SPY+QQQ+ARKK&hl=en&gl=US&ceid=US:en",
+      "reits": "https://news.google.com/rss/search?q=site:seekingalpha.com+REIT+real+estate+trust+yield&hl=en&gl=US&ceid=US:en",
+
+      "technology": "https://news.google.com/rss/search?q=site:seekingalpha.com+technology+AI+semiconductor+cloud+software&hl=en&gl=US&ceid=US:en",
+      "energy": "https://news.google.com/rss/search?q=site:seekingalpha.com+energy+oil+gas+renewable+battery+EV&hl=en&gl=US&ceid=US:en",
+      "financials": "https://news.google.com/rss/search?q=site:seekingalpha.com+financials+bank+credit+loan+insurance&hl=en&gl=US&ceid=US:en",
+      "healthcare": "https://news.google.com/rss/search?q=site:seekingalpha.com+healthcare+biotech+pharma+drug+trial&hl=en&gl=US&ceid=US:en",
+      "consumer": "https://news.google.com/rss/search?q=site:seekingalpha.com+consumer+retail+spending+e-commerce&hl=en&gl=US&ceid=US:en",
+      "industrial": "https://news.google.com/rss/search?q=site:seekingalpha.com+industrial+manufacturing+automation+transportation&hl=en&gl=US&ceid=US:en",
+
+      "value_investing": "https://news.google.com/rss/search?q=site:seekingalpha.com+value+investing+undervalued+picks&hl=en&gl=US&ceid=US:en",
+      "growth_investing": "https://news.google.com/rss/search?q=site:seekingalpha.com+growth+stocks+momentum+trend&hl=en&gl=US&ceid=US:en",
+      "dividend_investing": "https://news.google.com/rss/search?q=site:seekingalpha.com+dividend+portfolio+income+strategy&hl=en&gl=US&ceid=US:en",
+      "short_ideas": "https://news.google.com/rss/search?q=site:seekingalpha.com+short+ideas+bearish+analysis+overvalued&hl=en&gl=US&ceid=US:en",
+      "macro_outlook": "https://news.google.com/rss/search?q=site:seekingalpha.com+macro+economy+inflation+rate+Fed+market+outlook&hl=en&gl=US&ceid=US:en",
+
+      "ratings": "https://news.google.com/rss/search?q=site:seekingalpha.com+analyst+rating+upgrade+downgrade&hl=en&gl=US&ceid=US:en",
+      "sentiment": "https://news.google.com/rss/search?q=site:seekingalpha.com+sentiment+bullish+bearish+market+psychology&hl=en&gl=US&ceid=US:en",
+      "trending": "https://news.google.com/rss/search?q=site:seekingalpha.com+trending+stocks+hot+picks&hl=en&gl=US&ceid=US:en",
+      "authors": "https://news.google.com/rss/search?q=site:seekingalpha.com+top+authors+investment+ideas&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "verge": {
+    "main": "https://www.theverge.com/rss/index.xml",
+    "topics": {
+      "ai": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "business": "https://www.theverge.com/rss/business/index.xml",
+      "cyber-security": "https://www.theverge.com/rss/cyber-security/index.xml",
+      "energy": "https://www.theverge.com/rss/energy/index.xml",
+      "environment": "https://www.theverge.com/rss/environment/index.xml",
+      "space": "https://www.theverge.com/rss/space/index.xml",
+      "cars": "https://www.theverge.com/rss/cars/index.xml",
+      "exclusive": "https://www.theverge.com/rss/exclusive/index.xml",
+      "entertainment": "https://www.theverge.com/rss/entertainment/index.xml",
+      "features": "https://www.theverge.com/rss/features/index.xml"
+    }
+  }
+}

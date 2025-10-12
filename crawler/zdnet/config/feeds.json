@@ -1,0 +1,11 @@
+{
+  "zdnet": {
+    "main": "https://www.zdnet.com/news/rss.xml",
+    "topics": {
+      "ai": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml",
+      "business": "https://www.zdnet.com/topic/business-tech/rss.xml",
+      "software": "https://www.zdnet.com/topic/software/rss.xml",
+      "hardware": "https://www.zdnet.com/topic/hardware/rss.xml"
+    }
+  }
+}

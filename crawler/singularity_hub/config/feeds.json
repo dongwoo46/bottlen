@@ -1,0 +1,12 @@
+{
+  "singularity_hub": {
+    "main": "https://singularityhub.com/feed/",
+    "topics": {
+      "ai": "https://singularityhub.com/category/artificial-intelligence/feed/",
+      "robotics": "https://singularityhub.com/category/robotics/feed/",
+      "energy": "https://singularityhub.com/category/energy/feed/",
+      "space": "https://singularityhub.com/category/space/feed/",
+      "health": "https://singularityhub.com/category/health/feed/"
+    }
+  }
+}

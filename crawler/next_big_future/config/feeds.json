@@ -1,0 +1,22 @@
+{
+  "nextbigfuture": {
+    "main": "https://www.nextbigfuture.com/feed",
+    "topics": {
+      "ai": "https://www.nextbigfuture.com/tag/artificial-intelligence/feed",
+      "energy": "https://www.nextbigfuture.com/tag/energy/feed",
+      "nuclear": "https://www.nextbigfuture.com/tag/nuclear/feed",
+      "space": "https://www.nextbigfuture.com/tag/space/feed",
+      "quantum": "https://www.nextbigfuture.com/tag/quantum-computing/feed",
+      "robotics": "https://www.nextbigfuture.com/tag/robotics/feed",
+      "fusion": "https://www.nextbigfuture.com/tag/fusion/feed",
+      "battery": "https://www.nextbigfuture.com/tag/battery/feed",
+      "elon_musk": "https://www.nextbigfuture.com/tag/elon-musk/feed",
+      "economics": "https://www.nextbigfuture.com/tag/economics/feed",
+      "finance": "https://www.nextbigfuture.com/tag/finance/feed",
+      "biotech": "https://www.nextbigfuture.com/tag/biotech/feed",
+      "transportation": "https://www.nextbigfuture.com/tag/transportation/feed",
+      "mars": "https://www.nextbigfuture.com/tag/mars/feed",
+      "nanotechnology": "https://www.nextbigfuture.com/tag/nanotechnology/feed"
+    }
+  }
+}

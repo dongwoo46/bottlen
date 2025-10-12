@@ -1,0 +1,34 @@
+{
+  "wsj": {
+    "main": "https://news.google.com/rss/search?q=site:wsj.com+stock+market+investment+finance&hl=en&gl=US&ceid=US:en",
+    "topics": {
+
+      "markets": "https://news.google.com/rss/search?q=site:wsj.com+markets+stocks+bonds+indices+volatility&hl=en&gl=US&ceid=US:en",
+      "economy_policy": "https://news.google.com/rss/search?q=site:wsj.com+economy+Federal+Reserve+interest+rate+inflation+jobs+GDP&hl=en&gl=US&ceid=US:en",
+      "corporate_earnings": "https://news.google.com/rss/search?q=site:wsj.com+earnings+results+quarterly+guidance+revenue&hl=en&gl=US&ceid=US:en",
+      "corporate_governance": "https://news.google.com/rss/search?q=site:wsj.com+board+CEO+management+succession+corporate+governance&hl=en&gl=US&ceid=US:en",
+      "ai_technology": "https://news.google.com/rss/search?q=site:wsj.com+artificial+intelligence+AI+machine+learning+OpenAI+Microsoft+NVIDIA&hl=en&gl=US&ceid=US:en",
+      "semiconductors": "https://news.google.com/rss/search?q=site:wsj.com+semiconductor+chip+TSMC+Intel+AMD+Samsung&hl=en&gl=US&ceid=US:en",
+      "cybersecurity": "https://news.google.com/rss/search?q=site:wsj.com+cybersecurity+hacking+data+breach+security&hl=en&gl=US&ceid=US:en",
+      "cloud_infrastructure": "https://news.google.com/rss/search?q=site:wsj.com+cloud+AWS+Azure+Google+enterprise+computing&hl=en&gl=US&ceid=US:en",
+
+      "energy": "https://news.google.com/rss/search?q=site:wsj.com+energy+oil+gas+OPEC+renewable+transition&hl=en&gl=US&ceid=US:en",
+      "defense": "https://news.google.com/rss/search?q=site:wsj.com+defense+military+contract+aerospace+weapons&hl=en&gl=US&ceid=US:en",
+      "nuclear": "https://news.google.com/rss/search?q=site:wsj.com+nuclear+reactor+uranium+SMR+fusion&hl=en&gl=US&ceid=US:en",
+      "battery_ev": "https://news.google.com/rss/search?q=site:wsj.com+battery+EV+electric+vehicle+lithium+charging&hl=en&gl=US&ceid=US:en",
+      "metals_mining": "https://news.google.com/rss/search?q=site:wsj.com+metals+mining+copper+nickel+lithium+rare+earth&hl=en&gl=US&ceid=US:en",
+
+      "finance_banking": "https://news.google.com/rss/search?q=site:wsj.com+finance+bank+loan+credit+capital+fund&hl=en&gl=US&ceid=US:en",
+      "private_equity": "https://news.google.com/rss/search?q=site:wsj.com+private+equity+venture+capital+fundraising+deal&hl=en&gl=US&ceid=US:en",
+      "hedge_funds": "https://news.google.com/rss/search?q=site:wsj.com+hedge+fund+portfolio+returns+strategy&hl=en&gl=US&ceid=US:en",
+      "ipo": "https://news.google.com/rss/search?q=site:wsj.com+IPO+listing+SPAC+public+offering&hl=en&gl=US&ceid=US:en",
+      "mna": "https://news.google.com/rss/search?q=site:wsj.com+merger+acquisition+takeover+buyout&hl=en&gl=US&ceid=US:en",
+
+      "crypto": "https://news.google.com/rss/search?q=site:wsj.com+crypto+bitcoin+ethereum+blockchain+regulation&hl=en&gl=US&ceid=US:en",
+      "regulation_law": "https://news.google.com/rss/search?q=site:wsj.com+regulation+policy+law+SEC+compliance&hl=en&gl=US&ceid=US:en",
+      "esg_climate": "https://news.google.com/rss/search?q=site:wsj.com+ESG+sustainability+climate+carbon+green+investment&hl=en&gl=US&ceid=US:en",
+      "geopolitics": "https://news.google.com/rss/search?q=site:wsj.com+geopolitics+China+Taiwan+Ukraine+trade+war+sanctions&hl=en&gl=US&ceid=US:en",
+      "global_markets": "https://news.google.com/rss/search?q=site:wsj.com+Asia+Europe+emerging+markets+currency+exchange&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

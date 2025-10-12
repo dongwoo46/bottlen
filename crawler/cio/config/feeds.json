@@ -1,0 +1,16 @@
+{
+  "cio": {
+    "main": "https://news.google.com/rss/search?q=site:cio.com+IT+enterprise+strategy+digital+transformation&hl=en&gl=US&ceid=US:en",
+    "topics": {
+      "cloud_computing": "https://news.google.com/rss/search?q=site:cio.com+cloud+computing+AWS+Azure+Google+Cloud&hl=en&gl=US&ceid=US:en",
+      "cybersecurity": "https://news.google.com/rss/search?q=site:cio.com+cybersecurity+hacking+data+protection+breach&hl=en&gl=US&ceid=US:en",
+      "ai_ml": "https://news.google.com/rss/search?q=site:cio.com+AI+artificial+intelligence+machine+learning+generative+AI&hl=en&gl=US&ceid=US:en",
+      "data_analytics": "https://news.google.com/rss/search?q=site:cio.com+data+analytics+big+data+data+governance+business+intelligence&hl=en&gl=US&ceid=US:en",
+      "enterprise_software": "https://news.google.com/rss/search?q=site:cio.com+enterprise+software+ERP+CRM+SaaS+platform&hl=en&gl=US&ceid=US:en",
+      "it_infrastructure": "https://news.google.com/rss/search?q=site:cio.com+infrastructure+network+datacenter+hardware+operations&hl=en&gl=US&ceid=US:en",
+      "digital_transformation": "https://news.google.com/rss/search?q=site:cio.com+digital+transformation+IT+innovation+modernization&hl=en&gl=US&ceid=US:en",
+      "leadership_strategy": "https://news.google.com/rss/search?q=site:cio.com+CIO+leadership+strategy+management+governance&hl=en&gl=US&ceid=US:en",
+      "enterprise_innovation": "https://news.google.com/rss/search?q=site:cio.com+enterprise+innovation+emerging+technology+RPA+automation&hl=en&gl=US&ceid=US:en"
+    }
+  }
+}

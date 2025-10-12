@@ -1,0 +1,21 @@
+{
+  "prnewswire": {
+    "main": "https://www.prnewswire.com/rss/news-releases-list.rss",
+    "topics": {
+      "financial": "https://www.prnewswire.com/rss/financial-services-and-investing-latest-news.rss/financial-services-and-investing-latest-news-list.rss",
+      "business-technology": "https://www.prnewswire.com/rss/business-technology-latest-news.rss/business-technology-latest-news-list.rss",
+      "technology": "https://www.prnewswire.com/rss/technology-latest-news.rss/technology-latest-news-list.rss",
+      "consumer-technology": "https://www.prnewswire.com/rss/consumer-technology-latest-news.rss/consumer-technology-latest-news-list.rss",
+      "energy-natural-resources": "https://www.prnewswire.com/rss/energy-and-natural-resources-latest-news.rss/energy-and-natural-resources-latest-news-list.rss",
+      "environment": "https://www.prnewswire.com/rss/environment-latest-news.rss/environment-latest-news-list.rss",
+      "automotive": "https://www.prnewswire.com/rss/automotive-latest-news.rss/automotive-latest-news-list.rss",
+      "aerospace-defense": "https://www.prnewswire.com/rss/aerospace-and-defense-latest-news.rss/aerospace-and-defense-latest-news-list.rss",
+      "semiconductors": "https://www.prnewswire.com/rss/semiconductors-latest-news.rss/semiconductors-latest-news-list.rss",
+      "heavy-industry": "https://www.prnewswire.com/rss/heavy-industry-and-manufacturing-latest-news.rss/heavy-industry-and-manufacturing-latest-news-list.rss",
+      "health": "https://www.prnewswire.com/rss/health-latest-news.rss/health-latest-news-list.rss",
+      "biotech": "https://www.prnewswire.com/rss/biotech-latest-news.rss/biotech-latest-news-list.rss",
+      "general-business": "https://www.prnewswire.com/rss/general-business-latest-news.rss/general-business-latest-news-list.rss",
+      "telecommunications": "https://www.prnewswire.com/rss/telecommunications-latest-news.rss/telecommunications-latest-news-list.rss"
+    }
+  }
+}

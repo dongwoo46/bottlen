@@ -1,0 +1,13 @@
+{
+  "wired": {
+    "main": "https://www.wired.com/feed/rss",
+    "topics": {
+      "business": "https://www.wired.com/category/business/feed/",
+      "security": "https://www.wired.com/category/security/feed/",
+      "science": "https://www.wired.com/category/science/feed/",
+      "gear": "https://www.wired.com/category/gear/feed/",
+      "transportation": "https://www.wired.com/category/transportation/feed/",
+      "backchannel": "https://www.wired.com/category/backchannel/feed/"
+    }
+  }
+}
