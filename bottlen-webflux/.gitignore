@@ -38,3 +38,15 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# API keys and environment files
+.env
+
+# Environment files
+.env
+.env.*
+!env.example
+
+# Spring Boot config
+application-*.yml
+!application-example.yml
