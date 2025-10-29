@@ -7,6 +7,9 @@ __pycache__/
 *.pyd
 *.db
 *.sqlite3
+*.egg-info/
+build/
+dist/
 
 # ───────────────────────────────
 # 가상환경
@@ -26,12 +29,15 @@ env/
 # ───────────────────────────────
 *.log
 *.tmp
+nohup.out
 
 # ───────────────────────────────
-# 환경 변수 파일
+# 환경 변수 / 민감 정보 파일
 # ───────────────────────────────
 .env
 sa_cookies.json
+*.session
+*.session-journal
 
 # ───────────────────────────────
 # 크롤링 결과물 / 출력 파일
@@ -40,6 +46,20 @@ articles_summary.json
 output/
 data/
 */data/
+results/
+exports/
+
+# ───────────────────────────────
+# Docker / Redis / Kafka 등 임시 리소스
+# ───────────────────────────────
+docker-compose.override.yml
+*.pid
+*.sock
+*.rdb
+*.aof
+*.lz4
+*.tar
+*.gz
 
 # ───────────────────────────────
 # OS / 기타
