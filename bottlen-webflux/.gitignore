@@ -48,5 +48,7 @@ out/
 !env.example
 
 # Spring Boot config
+# Spring 설정 파일
+application.yml
 application-*.yml
 !application-example.yml

@@ -1,0 +1,25 @@
+# Reddit 수집 대상 subreddit 목록
+info:
+  - stocks
+  - investing
+  - StockMarket
+  - economy
+  - Economics
+  - finance
+  - technology
+
+meme:
+  - wallstreetbets
+  - superstonk
+  - Options
+  - CryptoMarkets
+  - cryptocurrency
+
+research:
+  - financialindependence
+  - algotrading
+  - DataIsBeautiful
+  - ETF
+  - MachineLearning
+  - datascience
+  - quant

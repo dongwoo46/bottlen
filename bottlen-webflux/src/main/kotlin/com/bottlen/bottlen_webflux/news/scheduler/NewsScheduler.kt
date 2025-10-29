@@ -12,8 +12,7 @@ class NewsScheduler(
         private val newsService: NewsService
 ) {
 
-//    @Scheduled(fixedRate = 3600000)
-    @Scheduled(fixedRate = 10000)  // 매 10초마다 실행 (테스트용)
+    @Scheduled(fixedRate = 3600000)
     fun fetchAllNewsPeriodically() = runBlocking {
         println("🕐 [Scheduler] 뉴스 수집 시작")
 
@@ -39,19 +38,19 @@ class NewsScheduler(
 //        println("✅ [NewsCatcher] ${catcherResult.size}건 수집 완료")
 //
 
-    val result = newsService.fetchByDomainAndCategoryNews(
-            domains = listOf("reuters.com", "businesswire.com"),
-            categories = listOf("technology", "science"),
-            source = NewsSource.NEWS_DATA
-    )
-
-    result.forEach { (domain, categoryMap) ->
-        println("🌐 $domain")
-        categoryMap.forEach { (category, articles) ->
-            println("   📂 $category → ${articles.size}개")
-            articles.take(3).forEach { println("      - ${it.title}") }
-        }
-    }
-        println("🏁 [Scheduler] 뉴스 수집 종료")
+//    val result = newsService.fetchByDomainAndCategoryNews(
+//            domains = listOf("reuters.com", "businesswire.com"),
+//            categories = listOf("technology", "science"),
+//            source = NewsSource.NEWS_DATA
+//    )
+//
+//    result.forEach { (domain, categoryMap) ->
+//        println("🌐 $domain")
+//        categoryMap.forEach { (category, articles) ->
+//            println("   📂 $category → ${articles.size}개")
+//            articles.take(3).forEach { println("      - ${it.title}") }
+//        }
+//    }
+//        println("🏁 [Scheduler] 뉴스 수집 종료")
     }
 }
