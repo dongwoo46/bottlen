@@ -98,3 +98,24 @@ Bottlen은 **데이터를 요약·구조화**하여 "무엇이 지금 가장 주
 - **Integration**
   - Telegram Bot API
   - Slack Webhook
+
+## 8. 데이터 파이프라인 아키텍처
+
+![alt text](image.png)
+
+## 9. 추가 기능 추가
+
+AI Agent 도입 이유:
+데이터 수집 과정의 복잡한 조건과 순서를 사람이 코드로 직접 관리하지 않고,
+Agent가 스스로 판단하여 자동화된 파이프라인을 실행하도록 만들기 위함.
+
+AI Agent가 하는 일:
+수집 → 파싱 → 요약 → 저장 과정을 상황에 따라 스스로 결정하고
+필요한 작업을 Tool에 요청함.
+
+설계 방식:
+LangGraph를 통해 AI 워크플로우를 그래프 형태로 구성하고,
+DeepSeek 모델로 reasoning 기반 판단을 수행함.
+
+아키텍처:
+LangGraph Agent + WebFlux Tool + DB/OpenSearch(RAG/Search)
