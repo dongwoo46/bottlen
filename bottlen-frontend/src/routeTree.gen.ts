@@ -9,12 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupExtraRouteImport } from './routes/signup-extra'
+import { Route as OauthCallbackRouteImport } from './routes/oauth-callback'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthNaverCallbackRouteImport } from './routes/auth.naver.callback'
-import { Route as AuthKakaoCallbackRouteImport } from './routes/auth.kakao.callback'
-import { Route as AuthGoogleCallbackRouteImport } from './routes/auth.google.callback'
 
+const SignupExtraRoute = SignupExtraRouteImport.update({
+  id: '/signup-extra',
+  path: '/signup-extra',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OauthCallbackRoute = OauthCallbackRouteImport.update({
+  id: '/oauth-callback',
+  path: '/oauth-callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -25,78 +34,57 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthNaverCallbackRoute = AuthNaverCallbackRouteImport.update({
-  id: '/auth/naver/callback',
-  path: '/auth/naver/callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthKakaoCallbackRoute = AuthKakaoCallbackRouteImport.update({
-  id: '/auth/kakao/callback',
-  path: '/auth/kakao/callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
-  id: '/auth/google/callback',
-  path: '/auth/google/callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/auth/google/callback': typeof AuthGoogleCallbackRoute
-  '/auth/kakao/callback': typeof AuthKakaoCallbackRoute
-  '/auth/naver/callback': typeof AuthNaverCallbackRoute
+  '/oauth-callback': typeof OauthCallbackRoute
+  '/signup-extra': typeof SignupExtraRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/auth/google/callback': typeof AuthGoogleCallbackRoute
-  '/auth/kakao/callback': typeof AuthKakaoCallbackRoute
-  '/auth/naver/callback': typeof AuthNaverCallbackRoute
+  '/oauth-callback': typeof OauthCallbackRoute
+  '/signup-extra': typeof SignupExtraRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/auth/google/callback': typeof AuthGoogleCallbackRoute
-  '/auth/kakao/callback': typeof AuthKakaoCallbackRoute
-  '/auth/naver/callback': typeof AuthNaverCallbackRoute
+  '/oauth-callback': typeof OauthCallbackRoute
+  '/signup-extra': typeof SignupExtraRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/login'
-    | '/auth/google/callback'
-    | '/auth/kakao/callback'
-    | '/auth/naver/callback'
+  fullPaths: '/' | '/login' | '/oauth-callback' | '/signup-extra'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/login'
-    | '/auth/google/callback'
-    | '/auth/kakao/callback'
-    | '/auth/naver/callback'
-  id:
-    | '__root__'
-    | '/'
-    | '/login'
-    | '/auth/google/callback'
-    | '/auth/kakao/callback'
-    | '/auth/naver/callback'
+  to: '/' | '/login' | '/oauth-callback' | '/signup-extra'
+  id: '__root__' | '/' | '/login' | '/oauth-callback' | '/signup-extra'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
-  AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
-  AuthKakaoCallbackRoute: typeof AuthKakaoCallbackRoute
-  AuthNaverCallbackRoute: typeof AuthNaverCallbackRoute
+  OauthCallbackRoute: typeof OauthCallbackRoute
+  SignupExtraRoute: typeof SignupExtraRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup-extra': {
+      id: '/signup-extra'
+      path: '/signup-extra'
+      fullPath: '/signup-extra'
+      preLoaderRoute: typeof SignupExtraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/oauth-callback': {
+      id: '/oauth-callback'
+      path: '/oauth-callback'
+      fullPath: '/oauth-callback'
+      preLoaderRoute: typeof OauthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -111,36 +99,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/naver/callback': {
-      id: '/auth/naver/callback'
-      path: '/auth/naver/callback'
-      fullPath: '/auth/naver/callback'
-      preLoaderRoute: typeof AuthNaverCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/kakao/callback': {
-      id: '/auth/kakao/callback'
-      path: '/auth/kakao/callback'
-      fullPath: '/auth/kakao/callback'
-      preLoaderRoute: typeof AuthKakaoCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/google/callback': {
-      id: '/auth/google/callback'
-      path: '/auth/google/callback'
-      fullPath: '/auth/google/callback'
-      preLoaderRoute: typeof AuthGoogleCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
-  AuthKakaoCallbackRoute: AuthKakaoCallbackRoute,
-  AuthNaverCallbackRoute: AuthNaverCallbackRoute,
+  OauthCallbackRoute: OauthCallbackRoute,
+  SignupExtraRoute: SignupExtraRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

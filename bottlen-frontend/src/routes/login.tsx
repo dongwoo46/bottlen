@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import OAuthButton from '../components/OAuthButton';
 
-export const Route = createFileRoute()({
+export const Route = createFileRoute('/login')({
   component: () => (
     <div className="mx-auto w-full max-w-sm space-y-3">
       <h1 className="text-xl font-bold">로그인</h1>

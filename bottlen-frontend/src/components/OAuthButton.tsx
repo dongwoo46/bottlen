@@ -1,3 +1,5 @@
+import { oauthApi } from '../services/api/oauth-api';
+
 type Provider = 'kakao' | 'naver' | 'google';
 type Size = 'sm' | 'md' | 'lg';
 
@@ -27,18 +29,13 @@ const ALT: Record<Provider, string> = {
   google: '구글 로그인',
 };
 
-// ✅ 인증 서버 직접 X → 백엔드 API 호출
-const buildOAuthUrl = (provider: Provider) => {
-  const backendBase = import.meta.env.VITE_API_BASE_URL as string;
-  return `${backendBase}/oauth2/authorization/${provider}`;
-};
-
 export default function OAuthButton({
   provider,
   size = 'md',
   className,
 }: Props) {
-  const href = buildOAuthUrl(provider);
+  const href = oauthApi.buildAuthUrl(provider);
+
   const src = IMG_URL[provider];
   const alt = ALT[provider];
 
