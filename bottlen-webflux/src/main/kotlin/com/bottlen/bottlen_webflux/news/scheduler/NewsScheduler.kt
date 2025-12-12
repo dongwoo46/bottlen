@@ -14,7 +14,7 @@ class NewsScheduler(
 
     @Scheduled(fixedRate = 3600000)
     fun fetchAllNewsPeriodically() = runBlocking {
-        println("🕐 [Scheduler] 뉴스 수집 시작")
+//        println("🕐 [Scheduler] 뉴스 수집 시작")
 
 //        val guardianResult = newsService.fetchNews(
 //                NewsCategoryGroup.GUARDIAN.map { it.label },

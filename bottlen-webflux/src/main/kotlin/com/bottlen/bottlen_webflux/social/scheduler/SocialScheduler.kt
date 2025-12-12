@@ -27,45 +27,45 @@ class SocialScheduler(
         return mapper.readValue(file, RedditConfig::class.java)
     }
 
-    /** ✅ INFO 그룹 (뉴스/리서치 중심) — 10분마다 */
-    @Scheduled(fixedDelay = 10 * 60 * 1000)
-    fun collectInfoSubreddits() {
-        val cfg = loadRedditConfig()
-        cfg.info.forEach { subreddit ->
-            redditService.fetch(subreddit, 20)
-                    .subscribeOn(Schedulers.boundedElastic())
-                    .subscribe(
-                            { dto -> println("🟢 [INFO] ${dto.source} - ${dto.title}") },
-                            { err -> println("❌ Reddit INFO fetch failed for $subreddit: ${err.message}") }
-                    )
-        }
-    }
-
-    /** ✅ MEME 그룹 (밈/심리 중심) — 5분마다 */
-    @Scheduled(fixedDelay = 5 * 60 * 1000)
-    fun collectMemeSubreddits() {
-        val cfg = loadRedditConfig()
-        cfg.meme.forEach { subreddit ->
-            redditService.fetch(subreddit, 20)
-                    .subscribeOn(Schedulers.boundedElastic())
-                    .subscribe(
-                            { dto -> println("🔥 [MEME] ${dto.source} - ${dto.title}") },
-                            { err -> println("❌ Reddit MEME fetch failed for $subreddit: ${err.message}") }
-                    )
-        }
-    }
-
-    /** ✅ RESEARCH 그룹 (느린 게시판) — 30분마다 */
-    @Scheduled(fixedDelay = 30 * 60 * 1000)
-    fun collectResearchSubreddits() {
-        val cfg = loadRedditConfig()
-        cfg.research.forEach { subreddit ->
-            redditService.fetch(subreddit, 15)
-                    .subscribeOn(Schedulers.boundedElastic())
-                    .subscribe(
-                            { dto -> println("📊 [RESEARCH] ${dto.source} - ${dto.title}") },
-                            { err -> println("❌ Reddit RESEARCH fetch failed for $subreddit: ${err.message}") }
-                    )
-        }
-    }
+//    /** ✅ INFO 그룹 (뉴스/리서치 중심) — 10분마다 */
+//    @Scheduled(fixedDelay = 10 * 60 * 1000)
+//    fun collectInfoSubreddits() {
+//        val cfg = loadRedditConfig()
+//        cfg.info.forEach { subreddit ->
+//            redditService.fetch(subreddit, 20)
+//                    .subscribeOn(Schedulers.boundedElastic())
+//                    .subscribe(
+//                            { dto -> println("🟢 [INFO] ${dto.source} - ${dto.title}") },
+//                            { err -> println("❌ Reddit INFO fetch failed for $subreddit: ${err.message}") }
+//                    )
+//        }
+//    }
+//
+//    /** ✅ MEME 그룹 (밈/심리 중심) — 5분마다 */
+//    @Scheduled(fixedDelay = 5 * 60 * 1000)
+//    fun collectMemeSubreddits() {
+//        val cfg = loadRedditConfig()
+//        cfg.meme.forEach { subreddit ->
+//            redditService.fetch(subreddit, 20)
+//                    .subscribeOn(Schedulers.boundedElastic())
+//                    .subscribe(
+//                            { dto -> println("🔥 [MEME] ${dto.source} - ${dto.title}") },
+//                            { err -> println("❌ Reddit MEME fetch failed for $subreddit: ${err.message}") }
+//                    )
+//        }
+//    }
+//
+//    /** ✅ RESEARCH 그룹 (느린 게시판) — 30분마다 */
+//    @Scheduled(fixedDelay = 30 * 60 * 1000)
+//    fun collectResearchSubreddits() {
+//        val cfg = loadRedditConfig()
+//        cfg.research.forEach { subreddit ->
+//            redditService.fetch(subreddit, 15)
+//                    .subscribeOn(Schedulers.boundedElastic())
+//                    .subscribe(
+//                            { dto -> println("📊 [RESEARCH] ${dto.source} - ${dto.title}") },
+//                            { err -> println("❌ Reddit RESEARCH fetch failed for $subreddit: ${err.message}") }
+//                    )
+//        }
+//    }
 }

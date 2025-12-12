@@ -1,8 +1,8 @@
 package com.bottlen.bottlen_webflux.news.service
 
 import com.bottlen.bottlen_webflux.news.domain.NewsSource
-import com.bottlen.news.client.NewsClient
-import com.bottlen.news.dto.NewsDto
+import com.bottlen.bottlen_webflux.news.client.api.NewsClient
+import com.bottlen.bottlen_webflux.news.dto.api.NewsDto
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -87,6 +87,8 @@ class NewsService(
 
     /**
      * ✅ 공통 Map 병합 로직 (domain + category 단위)
+     * @param domains     조회할 뉴스 도메인 리스트
+     * @param categories  조회할 카테고리 리스트
      */
     private fun mergeDomainCategoryResults(
             results: List<Map<String, Map<String, List<NewsDto>>>>
