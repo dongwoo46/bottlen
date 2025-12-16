@@ -2,11 +2,11 @@ package com.bottlen.bottlen_webflux.paper.domain
 
 data class Paper(
         val id: String,
-        val doi: String? = null,
+        val doi: String,
         val url: String? = null,
 
         // 기본 정보
-        val title: String?,
+        val title: String,
         val abstract: String?,
         val year: Int? = null,
         val authors: List<String> = emptyList(),

@@ -1,72 +1,80 @@
 package com.bottlen.bottlen_webflux.infra.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
 
-@Configuration
 @ConfigurationProperties(prefix = "external")
-class ExternalProperties {
-    lateinit var paper: PaperProperties
-    lateinit var contact: ContactProperties
-    lateinit var news: NewsProperties
-    lateinit var social: SocialProperties
-}
+data class ExternalProperties(
+    val paper: PaperProperties = PaperProperties(),
+    val contact: ContactProperties = ContactProperties(),
+    val news: NewsProperties = NewsProperties(),
+    val social: SocialProperties = SocialProperties()
+)
 
-class ContactProperties {
-    lateinit var mailto: String
-}
+/* =========================
+ * Contact
+ * ========================= */
+data class ContactProperties(
+    val mailto: String = ""
+)
 
-class PaperProperties {
-    lateinit var openalex: OpenAlex
-    lateinit var core: Core
-    lateinit var crossref: Crossref
-    lateinit var opencitations: OpenCitations
+/* =========================
+ * Paper / Academic APIs
+ * ========================= */
+data class PaperProperties(
+    val openalex: OpenAlexProperties = OpenAlexProperties(),
+    val core: CoreProperties = CoreProperties(),
+    val crossref: CrossrefProperties = CrossrefProperties(),
+    val opencitations: OpenCitationsProperties = OpenCitationsProperties()
+)
 
-    class OpenAlex {
-        lateinit var baseUrl: String
-        lateinit var mailto: String
-    }
+data class OpenAlexProperties(
+    val baseUrl: String = ""
+)
 
-    class Core {
-        lateinit var baseUrl: String
-        lateinit var apiKey: String
-    }
+data class CoreProperties(
+    val baseUrl: String = "",
+    val apiKey: String = ""
+)
 
-    class Crossref {
-        lateinit var baseUrl: String
-    }
+data class CrossrefProperties(
+    val baseUrl: String = ""
+)
 
-    class OpenCitations {
-        lateinit var baseUrl: String
-    }
-}
+data class OpenCitationsProperties(
+    val baseUrl: String = ""
+)
 
-class NewsProperties {
-    lateinit var guardian: ApiKeyBaseUrl
-    lateinit var newsdata: ApiKeyBaseUrl
-    lateinit var newscatcher: ApiKeyBaseUrl
-    lateinit var newyorktimes: ApiKeyBaseUrl
-    lateinit var gdelt: Gdelt
+/* =========================
+ * News APIs
+ * ========================= */
+data class NewsProperties(
+    val guardian: ApiKeyBaseUrlProperties = ApiKeyBaseUrlProperties(),
+    val newsdata: ApiKeyBaseUrlProperties = ApiKeyBaseUrlProperties(),
+    val newscatcher: ApiKeyBaseUrlProperties = ApiKeyBaseUrlProperties(),
+    val newyorktimes: ApiKeyBaseUrlProperties = ApiKeyBaseUrlProperties(),
+    val gdelt: GdeltProperties = GdeltProperties()
+)
 
-    class ApiKeyBaseUrl {
-        lateinit var baseUrl: String
-        lateinit var apiKey: String
-    }
+data class ApiKeyBaseUrlProperties(
+    val baseUrl: String = "",
+    val apiKey: String = ""
+)
 
-    class Gdelt {
-        lateinit var docBaseUrl: String
-        lateinit var contextBaseUrl: String
-    }
-}
+data class GdeltProperties(
+    val docBaseUrl: String = "",
+    val contextBaseUrl: String = ""
+)
 
-class SocialProperties {
-    lateinit var reddit: Reddit
+/* =========================
+ * Social APIs
+ * ========================= */
+data class SocialProperties(
+    val reddit: RedditProperties = RedditProperties()
+)
 
-    class Reddit {
-        lateinit var authBaseUrl: String
-        lateinit var apiBaseUrl: String
-        lateinit var clientId: String
-        lateinit var clientSecret: String
-    }
-}
-
+data class RedditProperties(
+    val authBaseUrl: String = "",
+    val apiBaseUrl: String = "",
+    val clientId: String = "",
+    val clientSecret: String = ""
+)

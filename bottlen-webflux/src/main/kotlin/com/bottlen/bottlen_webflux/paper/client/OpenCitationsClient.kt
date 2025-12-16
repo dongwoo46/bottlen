@@ -2,17 +2,21 @@ package com.bottlen.bottlen_webflux.paper.client
 
 import com.bottlen.bottlen_webflux.infra.config.ExternalProperties
 import com.bottlen.bottlen_webflux.paper.dto.opencitations.OpenCitationsResponse
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+import org.springframework.web.util.UriBuilder
+import reactor.core.publisher.Mono
+import java.net.URI
 
 @Component
 class OpenCitationsClient(
     webClientBuilder: WebClient.Builder,
     externalProperties: ExternalProperties
 ) : CitationClient {
+
+    private val log = LoggerFactory.getLogger(javaClass)
 
     private val baseUrl = externalProperties.paper.opencitations.baseUrl
 
@@ -21,27 +25,92 @@ class OpenCitationsClient(
         .build()
 
     override suspend fun fetchCitations(doi: String): List<OpenCitationsResponse> {
-        val encodedDoi = encode(doi)
-
         return webClient.get()
-            .uri("/citations/$encodedDoi")
+            .uri { builder -> buildCitationsUri(doi, builder) }
             .retrieve()
+            .onStatus({ it.is4xxClientError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .doOnNext {
+                        log.warn(
+                            "OpenCitations client error (citations): doi={}, status={}, body={}",
+                            doi,
+                            response.statusCode(),
+                            it
+                        )
+                    }
+                    .then(Mono.empty())
+            }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "OpenCitations server error (citations): doi={}, status={}, body={}",
+                            doi,
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("OpenCitations server error"))
+                    }
+            }
             .bodyToFlux(OpenCitationsResponse::class.java)
             .collectList()
-            .awaitSingle()
+            .awaitSingleOrNull()
+            ?: emptyList()
     }
 
     override suspend fun fetchReferences(doi: String): List<OpenCitationsResponse> {
-        val encodedDoi = encode(doi)
-
         return webClient.get()
-            .uri("/references/$encodedDoi")
+            .uri { builder -> buildReferencesUri(doi, builder) }
             .retrieve()
+            .onStatus({ it.is4xxClientError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .doOnNext {
+                        log.warn(
+                            "OpenCitations client error (references): doi={}, status={}, body={}",
+                            doi,
+                            response.statusCode(),
+                            it
+                        )
+                    }
+                    .then(Mono.empty())
+            }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "OpenCitations server error (references): doi={}, status={}, body={}",
+                            doi,
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("OpenCitations server error"))
+                    }
+            }
             .bodyToFlux(OpenCitationsResponse::class.java)
             .collectList()
-            .awaitSingle()
+            .awaitSingleOrNull()
+            ?: emptyList()
     }
 
-    private fun encode(value: String): String =
-        URLEncoder.encode(value, StandardCharsets.UTF_8)
+    /**
+     * 🔹 인용(Citations) URI 생성
+     */
+    private fun buildCitationsUri(
+        doi: String,
+        uriBuilder: UriBuilder
+    ): URI =
+        uriBuilder
+            .path("/citations/{doi}")
+            .build(doi.lowercase())
+
+    /**
+     * 🔹 참고문헌(References) URI 생성
+     */
+    private fun buildReferencesUri(
+        doi: String,
+        uriBuilder: UriBuilder
+    ): URI =
+        uriBuilder
+            .path("/references/{doi}")
+            .build(doi.lowercase())
 }

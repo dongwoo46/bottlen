@@ -19,7 +19,7 @@ data class CrossrefWork(
     val URL: String?,
 
     @JsonProperty("abstract")
-    val abstract: String? = null
+    val abstract: String?
 ) {
     data class Author(
         val given: String?,

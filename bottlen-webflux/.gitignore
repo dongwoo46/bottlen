@@ -52,3 +52,11 @@ out/
 application.yml
 application-*.yml
 !application-example.yml
+
+# Database runtime data
+data/
+redis_data/
+
+# Redis / DB common
+**/data/
+**/redis_data/

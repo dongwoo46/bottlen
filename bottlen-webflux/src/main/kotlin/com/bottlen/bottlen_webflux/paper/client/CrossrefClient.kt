@@ -7,17 +7,21 @@ import com.bottlen.bottlen_webflux.paper.dto.FetchResponse
 import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefResponse
 import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefSingleResponse
 import com.bottlen.bottlen_webflux.paper.mapper.toPaper
-import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+import org.springframework.web.util.UriBuilder
+import reactor.core.publisher.Mono
+import java.net.URI
 
 @Component
 class CrossrefClient(
     webClientBuilder: WebClient.Builder,
     externalProperties: ExternalProperties
 ) : PaperClient {
+
+    private val log = LoggerFactory.getLogger(javaClass)
 
     private val crossref = externalProperties.paper.crossref
     private val mailto = externalProperties.contact.mailto
@@ -31,16 +35,39 @@ class CrossrefClient(
         .build()
 
     override suspend fun fetch(request: FetchRequest): FetchResponse {
-        val uri = buildUri(request)
-
         val response = webClient.get()
-            .uri(uri)
+            .uri { builder -> buildSearchUri(request, builder) }
             .retrieve()
+            .onStatus({ it.is4xxClientError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .doOnNext {
+                        log.warn(
+                            "Crossref client error: status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                    }
+                    .then(Mono.empty())
+            }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "Crossref server error: status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("Crossref server error"))
+                    }
+            }
             .bodyToMono(CrossrefResponse::class.java)
-            .awaitSingle()
+            .awaitSingleOrNull()
+            ?: return FetchResponse(emptyList())
 
-        val items = response.message?.items ?: emptyList()
-        val papers = items.mapNotNull { it.toPaper() }
+        val papers = response.message
+            ?.items
+            ?.mapNotNull { it.toPaper() }
+            ?: emptyList()
 
         return FetchResponse(
             papers = papers,
@@ -49,46 +76,68 @@ class CrossrefClient(
     }
 
     override suspend fun fetchByDoi(doi: String): Paper? {
-        val encodedDoi = encode(doi)
-
         val response = webClient.get()
-            .uri("/works/$encodedDoi")
+            .uri { builder -> buildDoiUri(doi, builder) }
             .retrieve()
+            .onStatus({ it.value() == 404 }) { Mono.empty() }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "Crossref server error: status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("Crossref server error"))
+                    }
+            }
             .bodyToMono(CrossrefSingleResponse::class.java)
-            .awaitSingle()
+            .awaitSingleOrNull()
 
-        return response.message?.toPaper()
+        return response?.message?.toPaper()
     }
 
-    private fun buildUri(req: FetchRequest): String {
-        val params = mutableListOf<String>()
+    /**
+     * 🔹 검색 URI 생성 책임 분리
+     */
+    private fun buildSearchUri(
+        request: FetchRequest,
+        uriBuilder: UriBuilder
+    ): URI {
         val filters = mutableListOf<String>()
 
-        // 🔹 검색어
-        req.keyword?.let {
-            params += "query=${encode(it)}"
+        request.fromDate?.let { filters += "from-pub-date:$it" }
+        request.toDate?.let { filters += "until-pub-date:$it" }
+
+        uriBuilder.path("/works")
+
+        request.keyword?.let {
+            uriBuilder.queryParam("query", it)
         }
 
-        // 🔹 날짜 필터 (하나의 filter로 합침)
-        req.fromDate?.let { filters += "from-pub-date:$it" }
-        req.toDate?.let { filters += "until-pub-date:$it" }
+        request.sort?.let {
+            uriBuilder.queryParam("sort", it)
+        }
 
         if (filters.isNotEmpty()) {
-            params += "filter=${filters.joinToString(",")}"
+            uriBuilder.queryParam("filter", filters.joinToString(","))
         }
 
-        // 🔹 정렬
-        req.sort?.let {
-            params += "sort=$it"
-        }
+        uriBuilder
+            .queryParam("rows", request.limit)
+            .queryParam("cursor", request.cursor ?: "*")
 
-        // 🔹 페이징
-        params += "rows=${req.limit}"
-        params += "cursor=${req.cursor ?: "*"}"
-
-        return "/works?${params.joinToString("&")}"
+        return uriBuilder.build()
     }
 
-    private fun encode(value: String): String =
-        URLEncoder.encode(value, StandardCharsets.UTF_8)
+    /**
+     * 🔹 DOI 단건 조회 URI
+     */
+    private fun buildDoiUri(
+        doi: String,
+        uriBuilder: UriBuilder
+    ): URI =
+        uriBuilder
+            .path("/works/{doi}")
+            .build(doi)
 }

@@ -7,95 +7,149 @@ import com.bottlen.bottlen_webflux.paper.dto.FetchResponse
 import com.bottlen.bottlen_webflux.paper.dto.openalex.OpenAlexResponse
 import com.bottlen.bottlen_webflux.paper.mapper.toPaper
 import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.util.UriBuilder
+import reactor.core.publisher.Mono
+import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-
 @Component
 class OpenAlexClient(
-        webClientBuilder: WebClient.Builder,
-        externalProperties: ExternalProperties
+    webClientBuilder: WebClient.Builder,
+    externalProperties: ExternalProperties
 ) : PaperClient {
+
+    private val log = LoggerFactory.getLogger(javaClass)
 
     private val openalex = externalProperties.paper.openalex
     private val mailto = externalProperties.contact.mailto
 
     private val webClient: WebClient = webClientBuilder
-            .baseUrl(openalex.baseUrl)
-            .defaultHeader(
-                    "User-Agent",
-                    "bottlen/1.0 (mailto:$mailto)"
-            )
-            .build()
+        .baseUrl(openalex.baseUrl)
+        .defaultHeader(
+            "User-Agent",
+            "bottlen/1.0 (mailto:$mailto)"
+        )
+        .build()
 
     override suspend fun fetch(request: FetchRequest): FetchResponse {
-        val uri = buildUri(request)
-
         val response = webClient.get()
-                .uri(uri)
-                .retrieve()
-                .bodyToMono(OpenAlexResponse::class.java)
-                .awaitSingle()
-
-        val papers = response.results
-                ?.mapNotNull { it.toPaper() }
-                ?: emptyList()
+            .uri { builder -> buildSearchUri(request, builder) }
+            .retrieve()
+            .onStatus({ it.is4xxClientError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .doOnNext {
+                        log.warn(
+                            "OpenAlex client error: status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                    }
+                    .then(Mono.empty())
+            }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "OpenAlex server error: status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("OpenAlex server error"))
+                    }
+            }
+            .bodyToMono(OpenAlexResponse::class.java)
+            .awaitSingleOrNull()
+            ?: return FetchResponse(emptyList())
 
         return FetchResponse(
-                papers = papers,
-                nextCursor = response.meta?.nextCursor
+            papers = response.results?.mapNotNull { it.toPaper() } ?: emptyList(),
+            nextCursor = response.meta?.nextCursor
         )
     }
 
     override suspend fun fetchByDoi(doi: String): Paper? {
-        val encodedDoi = encode(doi.lowercase())
-
-        val uri = "/works?filter=doi:$encodedDoi&per-page=1"
-
         val response = webClient.get()
-            .uri(uri)
+            .uri { builder -> buildDoiUri(doi, builder) }
             .retrieve()
+            .onStatus({ it.is4xxClientError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .doOnNext {
+                        log.warn(
+                            "OpenAlex DOI not found: doi={}, status={}, body={}",
+                            doi,
+                            response.statusCode(),
+                            it
+                        )
+                    }
+                    .then(Mono.empty())
+            }
+            .onStatus({ it.is5xxServerError }) { response ->
+                response.bodyToMono(String::class.java)
+                    .flatMap {
+                        log.error(
+                            "OpenAlex server error: doi={}, status={}, body={}",
+                            response.statusCode(),
+                            it
+                        )
+                        Mono.error(RuntimeException("OpenAlex server error"))
+                    }
+            }
             .bodyToMono(OpenAlexResponse::class.java)
-            .awaitSingle()
+            .awaitSingleOrNull()
 
-        return response.results
+        return response?.results
             ?.firstOrNull()
             ?.toPaper()
     }
 
-    private fun buildUri(req: FetchRequest): String {
-        val params = mutableListOf<String>()
+    /**
+     * 🔹 검색 URI 조립 전용 책임
+     */
+    private fun buildSearchUri(
+        req: FetchRequest,
+        uriBuilder: UriBuilder
+    ): URI {
         val filters = mutableListOf<String>()
 
-        // 🔹 키워드 검색
-        req.keyword?.let {
-            params += "search=${encode(it)}"
-        }
-
-        // 🔹 날짜 필터
         req.fromDate?.let { filters += "from_publication_date:$it" }
         req.toDate?.let { filters += "to_publication_date:$it" }
-
-        // 🔹 최소 품질 필터 (너무 broad한 요청 방지)
         filters += "has_doi:true"
 
+        uriBuilder.path("/works")
+
+        req.keyword?.let {
+            uriBuilder.queryParam("search", it)
+        }
+
         if (filters.isNotEmpty()) {
-            params += "filter=${filters.joinToString(",")}"
+            uriBuilder.queryParam("filter", filters.joinToString(","))
         }
 
-        // 🔹 정렬
         req.sort?.let {
-            params += "sort=$it"
+            uriBuilder.queryParam("sort", it)
         }
 
-        // 🔹 페이징
-        params += "per-page=${req.limit}"
-        params += "cursor=${req.cursor ?: "*"}"
+        uriBuilder
+            .queryParam("per-page", req.limit)
+            .queryParam("cursor", req.cursor ?: "*")
 
-        return "/works?${params.joinToString("&")}"
+        return uriBuilder.build()
     }
 
-    private fun encode(value: String): String =
-            URLEncoder.encode(value, StandardCharsets.UTF_8)
+    /**
+     * 🔹 DOI 단건 조회 URI 조립
+     */
+    private fun buildDoiUri(
+        doi: String,
+        uriBuilder: UriBuilder
+    ): URI =
+        uriBuilder
+            .path("/works")
+            .queryParam("filter", "doi:${doi.lowercase()}")
+            .queryParam("per-page", 1)
+            .build()
 }
