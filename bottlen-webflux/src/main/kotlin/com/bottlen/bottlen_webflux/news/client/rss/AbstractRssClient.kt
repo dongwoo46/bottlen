@@ -3,6 +3,7 @@ package com.bottlen.bottlen_webflux.news.client.rss
 import com.bottlen.bottlen_webflux.news.dto.rss.RssArticle
 import com.bottlen.bottlen_webflux.news.dto.rss.RssFeedConfig
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import reactor.core.publisher.Flux
@@ -17,10 +18,10 @@ import java.time.Duration
  * - source별 정책은 override 가능
  */
 abstract class AbstractRssClient(
-    webClientBuilder: WebClient.Builder
+    @Qualifier("rssWebClient")
+    protected val webClient: WebClient
 ) : RssClient {
 
-    protected val webClient: WebClient = webClientBuilder.build()
     protected val logger = LoggerFactory.getLogger(javaClass)
 
     // 구현체가 다시 fetchArticles를 직접 구현하는것 방지 => final
@@ -53,7 +54,7 @@ abstract class AbstractRssClient(
             }
             .onErrorResume { error ->
                 handleFetchError(feed, error)
-                Mono.empty()
+                if (swallowFetchError()) Mono.empty() else Mono.error(error)
             }
     }
 
@@ -92,6 +93,15 @@ abstract class AbstractRssClient(
      * - 개발/테스트: false (fail-fast)
      */
     protected open fun swallowParsingError(): Boolean = true
+
+    /**
+     * fetch 에러를 삼킬지 여부
+     *
+     * - 운영 환경: true (fail-soft)
+     * - 개발/테스트: false (fail-fast)
+     */
+    protected open fun swallowFetchError(): Boolean = true
+
 
     /**
      * HTTP / 네트워크 에러 처리
