@@ -1,10 +1,11 @@
 package com.bottlen.bottlen_webflux.news.dto.rss
 
+import com.bottlen.bottlen_webflux.news.domain.Topic
+
 
 data class RssArticle(
-        val id: String,             // 해시 (link + title)
         val source: String,         // cnbc / reuters / physorg ...
-        val topic: String,          // us / business / science ...
+        val topic: Topic,          // us / business / science ...
         val title: String,
         val link: String,
         val summary: String,
