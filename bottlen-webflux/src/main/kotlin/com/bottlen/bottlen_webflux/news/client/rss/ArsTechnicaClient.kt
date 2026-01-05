@@ -5,11 +5,13 @@ import com.bottlen.bottlen_webflux.news.dto.rss.RssFeedConfig
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Parser
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
+import java.time.Duration
 import java.time.Instant
 
 @Component
@@ -18,25 +20,79 @@ class ArsTechnicaClient(
 ) : AbstractRssClient(webClient) {
 
     override fun supportedSource(): String = "ars_technica"
+    private val log = LoggerFactory.getLogger(javaClass)
+
 
     override fun parseInternal(
         xml: String,
         feed: RssFeedConfig
     ): Flux<RssArticle> {
 
-        /**
-         * Jsoup XML 파싱은 blocking + CPU 작업이므로
-         * 반드시 boundedElastic에서 수행
-         */
+        // 1. 입력 검증: 빈 XML 방어
+        if (xml.isBlank()) {
+            log.warn("[RSS][PARSE] empty xml. source={}", feed.source)
+            return Flux.empty()
+        }
+
+        // 2. XML 크기 제한 (OOM 방지)
+        val xmlSizeBytes = xml.length * 2
+        val maxSize = 10 * 1024 * 1024
+        if (xmlSizeBytes > maxSize) {
+            log.error(
+                "[RSS][PARSE] xml too large. source={}, size=~{} bytes",
+                feed.source,
+                xmlSizeBytes
+            )
+            return Flux.empty()
+        }
+
         return Mono.fromCallable {
+            log.debug(
+                "[RSS][PARSE] start parsing. source={}, size=~{} bytes",
+                feed.source,
+                xmlSizeBytes
+            )
+
             Jsoup.parse(xml, "", Parser.xmlParser())
                 .select("item, entry")
         }
+            // 3️. 전체 XML 파싱 타임아웃 (boundedElastic 보호)
+            .timeout(Duration.ofSeconds(30))
             .subscribeOn(Schedulers.boundedElastic())
+            // 4️. XML 파싱 실패 시 feed 단위로 안전 종료
+            .onErrorResume { e ->
+                log.error(
+                    "[RSS][PARSE] xml parse failed. source={}",
+                    feed.source,
+                    e
+                )
+                Mono.empty()
+            }
             .flatMapMany { entries ->
                 Flux.fromIterable(entries)
-                    .mapNotNull { entry ->
-                        parseEntry(entry, feed)
+                    .flatMap { entry ->
+                        Mono.fromCallable { parseEntry(entry, feed) }
+                            // 5️⃣ entry 단위 에러 보호
+                            .onErrorResume { e ->
+                                log.warn(
+                                    "[RSS][PARSE] entry parse failed. source={}",
+                                    feed.source,
+                                    e
+                                )
+                                Mono.empty()
+                            }
+                            // 6️⃣ null 처리 + 로깅을 한 번에
+                            .flatMap { article ->
+                                if (article == null) {
+                                    log.debug(
+                                        "[RSS][PARSE] entry dropped. source={}",
+                                        feed.source
+                                    )
+                                    Mono.empty()
+                                } else {
+                                    Mono.just(article)
+                                }
+                            }
                     }
             }
     }

@@ -18,7 +18,15 @@ class RssIngestService(
     // rss feed 요청 하고 bloomfilter를 이용하여 article 필터링
     suspend fun ingest(feed: RssFeedConfig) {
         val filterName = "BF:news:${feed.source}"
-        bloom.init(filterName)
+        val bloomAvailable = bloom.init(filterName)
+            .onFailure {
+                log.warn(
+                    "[RSS][BLOOM] init failed, continue without dedup. source={}",
+                    feed.source,
+                    it
+                )
+            }
+            .isSuccess
 
         var totalCount = 0
         var newCount = 0
@@ -31,9 +39,19 @@ class RssIngestService(
 
                 val articleKey = generateArticleKey(article)
 
-                val isNew = try {
-                    bloom.add(filterName, articleKey)
-                } catch (e: Exception) {
+                // Bloom 사용 가능할 때만 dedup 수행
+                val isNew = if (bloomAvailable) {
+                    try {
+                        bloom.add(filterName, articleKey)
+                    } catch (e: Exception) {
+                        log.warn(
+                            "[RSS][BLOOM] add failed, fallback to accept. source={}",
+                            feed.source,
+                            e
+                        )
+                        true
+                    }
+                } else {
                     true
                 }
 
