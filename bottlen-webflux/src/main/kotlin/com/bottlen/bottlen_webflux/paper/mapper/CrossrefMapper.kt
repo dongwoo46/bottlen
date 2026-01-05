@@ -5,14 +5,15 @@ import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefWork
 
 fun CrossrefWork.toPaper(): Paper? {
     val doiValue = doi ?: return null
+    val titleValue = title?.firstOrNull() ?: return null
 
     return Paper(
         id = doiValue,
         doi = doiValue,
         url = URL,
 
-        title = title?.firstOrNull(),
-        abstract = null, // Crossref는 abstract 거의 없음
+        title = titleValue,
+        abstract = null,
 
         year = issued
             ?.dateParts
@@ -46,3 +47,4 @@ fun CrossrefWork.toPaper(): Paper? {
         impactScore = null
     )
 }
+

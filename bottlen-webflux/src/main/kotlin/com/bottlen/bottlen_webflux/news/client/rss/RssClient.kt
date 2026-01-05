@@ -6,6 +6,8 @@ import com.bottlen.bottlen_webflux.news.dto.rss.RssFeedConfig
 
 interface RssClient {
 
+    fun supportedSource(): String
+
     /**
      * 하나의 RSS Feed 설정을 받아
      * - XML fetch

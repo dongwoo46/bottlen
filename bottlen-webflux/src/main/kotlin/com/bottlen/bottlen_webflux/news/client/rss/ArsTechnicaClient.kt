@@ -4,50 +4,45 @@ import com.bottlen.bottlen_webflux.news.dto.rss.RssArticle
 import com.bottlen.bottlen_webflux.news.dto.rss.RssFeedConfig
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import org.jsoup.parser.Parser
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import reactor.core.scheduler.Schedulers
 import java.time.Instant
 
 @Component
 class ArsTechnicaClient(
-    webClientBuilder: WebClient.Builder
-) : AbstractRssClient(webClientBuilder) {
+    webClient: WebClient
+) : AbstractRssClient(webClient) {
+
+    override fun supportedSource(): String = "ars_technica"
 
     override fun parseInternal(
         xml: String,
         feed: RssFeedConfig
     ): Flux<RssArticle> {
 
-        return Flux.create<RssArticle> { sink ->
-            try {
-                val document = Jsoup.parse(
-                    xml,
-                    "",
-                    org.jsoup.parser.Parser.xmlParser()
-                )
-
-                val entries = document.select("item, entry")
-
-                for (entry in entries) {
-                    val article = parseEntry(entry, feed)
-                    if (article != null) {
-                        sink.next(article)
-                    }
-                }
-
-                sink.complete()
-            } catch (e: Exception) {
-                sink.error(e)
-            }
+        /**
+         * Jsoup XML 파싱은 blocking + CPU 작업이므로
+         * 반드시 boundedElastic에서 수행
+         */
+        return Mono.fromCallable {
+            Jsoup.parse(xml, "", Parser.xmlParser())
+                .select("item, entry")
         }
-            // ⭐ 핵심: Jsoup 파싱은 이벤트 루프에서 실행되면 안 됨
             .subscribeOn(Schedulers.boundedElastic())
+            .flatMapMany { entries ->
+                Flux.fromIterable(entries)
+                    .mapNotNull { entry ->
+                        parseEntry(entry, feed)
+                    }
+            }
     }
 
     /**
-     * Ars Technica RSS entry 하나를 RssArticle로 변환
+     * Ars Technica RSS entry → RssArticle 변환
      */
     private fun parseEntry(
         entry: Element,
@@ -98,14 +93,18 @@ class ArsTechnicaClient(
     }
 
     /**
-     * Ars Technica RSS 전용 content 추출 로직
+     * Ars Technica RSS 전용 본문 추출 로직
      * (source-specific)
      */
     private fun extractContent(entry: Element): String {
-        entry.selectFirst("content\\:encoded")?.html()?.let {
-            if (it.isNotBlank()) return it
-        }
 
+        // RSS content:encoded 우선
+        entry.selectFirst("content\\:encoded")
+            ?.html()
+            ?.takeIf { it.isNotBlank() }
+            ?.let { return it }
+
+        // Atom content[type=html]
         val atomContent = entry
             .select("content[type=html]")
             .html()
