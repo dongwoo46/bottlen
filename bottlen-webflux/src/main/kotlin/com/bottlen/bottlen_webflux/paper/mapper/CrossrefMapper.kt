@@ -1,48 +1,20 @@
 package com.bottlen.bottlen_webflux.paper.mapper
 
-import com.bottlen.bottlen_webflux.paper.domain.Paper
+import com.bottlen.bottlen_webflux.paper.domain.PaperDocument
+import com.bottlen.bottlen_webflux.paper.domain.PaperSource
 import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefWork
 
-fun CrossrefWork.toPaper(): Paper? {
+fun CrossrefWork.toPaperDocument(): PaperDocument? {
     val doiValue = doi ?: return null
+    val titleValue = title?.firstOrNull() ?: return null
 
-    return Paper(
-        id = doiValue,
+    return PaperDocument(
+        id = "crossref:$doiValue", // source-specific ID
+        title = titleValue,
+        abstractText = null,
+        fullText = null,
         doi = doiValue,
-        url = URL,
-
-        title = title?.firstOrNull(),
-        abstract = null, // Crossref는 abstract 거의 없음
-
-        year = issued
-            ?.dateParts
-            ?.firstOrNull()
-            ?.firstOrNull(),
-
-        authors = author
-            ?.mapNotNull {
-                listOfNotNull(it.given, it.family)
-                    .joinToString(" ")
-                    .takeIf { name -> name.isNotBlank() }
-            }
-            ?: emptyList(),
-
-        venue = containerTitle?.firstOrNull(),
-        pdfUrl = null,
-
-        concepts = emptyList(),
-
-        citedByCount = null,
-        referenceCount = null,
-        references = emptyList(),
-
-        extractedKeywords = null,
-        coreSummary = null,
-        applications = null,
-        technicalContributions = null,
-        category = null,
-
-        trendScore = null,
-        impactScore = null
+        downloadUrl = null,
+        source = PaperSource.CROSSREF
     )
 }

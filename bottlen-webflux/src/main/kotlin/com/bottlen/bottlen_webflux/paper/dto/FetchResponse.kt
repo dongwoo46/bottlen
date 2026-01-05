@@ -1,9 +1,9 @@
 package com.bottlen.bottlen_webflux.paper.dto
 
-import com.bottlen.bottlen_webflux.paper.domain.Paper
+import com.bottlen.bottlen_webflux.paper.domain.PaperDocument
 
 data class FetchResponse(
-        val papers: List<Paper>,      // 표준화 Paper 엔티티
+        val paperDocuments: List<PaperDocument>,     // 표준화 Paper 엔티티
         /**
          * Cursor-based pagination.
          * Used by OpenAlex, OpenCitations.

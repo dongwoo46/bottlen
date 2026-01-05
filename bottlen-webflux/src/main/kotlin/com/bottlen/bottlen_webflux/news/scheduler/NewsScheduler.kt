@@ -1,16 +1,20 @@
 package com.bottlen.bottlen_webflux.news.scheduler
 
-import com.bottlen.bottlen_webflux.news.domain.NewsCategoryGroup
-import com.bottlen.bottlen_webflux.news.domain.NewsSource
 import com.bottlen.bottlen_webflux.news.service.NewsService
-import kotlinx.coroutines.runBlocking
+import com.bottlen.bottlen_webflux.news.service.RssService
+import kotlinx.coroutines.*
+import org.springframework.beans.factory.DisposableBean
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
 @Component
 class NewsScheduler(
-        private val newsService: NewsService
-) {
+    private val newsService: NewsService,
+    private val rssService: RssService
+) : DisposableBean {
+    private val scope = CoroutineScope(
+        Dispatchers.IO + SupervisorJob()
+    )
 
     @Scheduled(fixedRate = 3600000)
     fun fetchAllNewsPeriodically() = runBlocking {
@@ -52,5 +56,21 @@ class NewsScheduler(
 //        }
 //    }
 //        println("🏁 [Scheduler] 뉴스 수집 종료")
+    }
+
+    /**
+    * RSS Feed 주기 실행
+    *
+    * - 실행 대상 선정 및 수집은 RssService가 담당
+    */
+    @Scheduled(fixedDelay = 10_000) // 10초
+    fun runRssFeeds() {
+        scope.launch {
+            rssService.executeRunnableFeeds()
+        }
+    }
+
+    override fun destroy() {
+        scope.cancel()
     }
 }

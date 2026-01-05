@@ -1,12 +1,11 @@
 package com.bottlen.bottlen_webflux.paper.client
 
 import com.bottlen.bottlen_webflux.infra.config.ExternalProperties
-import com.bottlen.bottlen_webflux.paper.domain.Paper
+import com.bottlen.bottlen_webflux.paper.domain.PaperDocument
 import com.bottlen.bottlen_webflux.paper.dto.FetchRequest
 import com.bottlen.bottlen_webflux.paper.dto.FetchResponse
 import com.bottlen.bottlen_webflux.paper.dto.openalex.OpenAlexResponse
-import com.bottlen.bottlen_webflux.paper.mapper.toPaper
-import kotlinx.coroutines.reactor.awaitSingle
+import com.bottlen.bottlen_webflux.paper.mapper.toPaperDocument
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -14,8 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriBuilder
 import reactor.core.publisher.Mono
 import java.net.URI
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+
 @Component
 class OpenAlexClient(
     webClientBuilder: WebClient.Builder,
@@ -65,13 +63,18 @@ class OpenAlexClient(
             .awaitSingleOrNull()
             ?: return FetchResponse(emptyList())
 
+        val documents: List<PaperDocument> =
+            response.results
+                ?.mapNotNull { it.toPaperDocument() }
+                ?: emptyList()
+
         return FetchResponse(
-            papers = response.results?.mapNotNull { it.toPaper() } ?: emptyList(),
+            paperDocuments = documents,
             nextCursor = response.meta?.nextCursor
         )
     }
 
-    override suspend fun fetchByDoi(doi: String): Paper? {
+    override suspend fun fetchByDoi(doi: String): PaperDocument? {
         val response = webClient.get()
             .uri { builder -> buildDoiUri(doi, builder) }
             .retrieve()
@@ -92,6 +95,7 @@ class OpenAlexClient(
                     .flatMap {
                         log.error(
                             "OpenAlex server error: doi={}, status={}, body={}",
+                            doi,
                             response.statusCode(),
                             it
                         )
@@ -101,13 +105,14 @@ class OpenAlexClient(
             .bodyToMono(OpenAlexResponse::class.java)
             .awaitSingleOrNull()
 
-        return response?.results
+        return response
+            ?.results
             ?.firstOrNull()
-            ?.toPaper()
+            ?.toPaperDocument()
     }
 
     /**
-     * 🔹 검색 URI 조립 전용 책임
+     * 검색 URI 조립 책임
      */
     private fun buildSearchUri(
         req: FetchRequest,
@@ -141,7 +146,7 @@ class OpenAlexClient(
     }
 
     /**
-     * 🔹 DOI 단건 조회 URI 조립
+     * DOI 단건 조회 URI
      */
     private fun buildDoiUri(
         doi: String,

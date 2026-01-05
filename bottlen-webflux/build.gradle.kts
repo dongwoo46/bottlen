@@ -46,6 +46,9 @@ dependencies {
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("org.jsoup:jsoup:1.17.2")
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-database-postgresql")
+	implementation("org.apache.commons:commons-pool2")
 }
 
 kotlin {

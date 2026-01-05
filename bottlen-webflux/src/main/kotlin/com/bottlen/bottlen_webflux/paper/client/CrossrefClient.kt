@@ -6,7 +6,6 @@ import com.bottlen.bottlen_webflux.paper.dto.FetchRequest
 import com.bottlen.bottlen_webflux.paper.dto.FetchResponse
 import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefResponse
 import com.bottlen.bottlen_webflux.paper.dto.crossref.CrossrefSingleResponse
-import com.bottlen.bottlen_webflux.paper.mapper.toPaper
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -14,6 +13,8 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.util.UriBuilder
 import reactor.core.publisher.Mono
 import java.net.URI
+import com.bottlen.bottlen_webflux.paper.mapper.toPaperDocument
+import com.bottlen.bottlen_webflux.paper.domain.PaperDocument
 
 @Component
 class CrossrefClient(
@@ -64,18 +65,19 @@ class CrossrefClient(
             .awaitSingleOrNull()
             ?: return FetchResponse(emptyList())
 
-        val papers = response.message
+        val documents: List<PaperDocument> = response.message
             ?.items
-            ?.mapNotNull { it.toPaper() }
+            ?.mapNotNull { it.toPaperDocument() }
             ?: emptyList()
 
         return FetchResponse(
-            papers = papers,
+            paperDocuments = documents,
             nextCursor = response.message?.nextCursor
         )
     }
 
-    override suspend fun fetchByDoi(doi: String): Paper? {
+
+    override suspend fun fetchByDoi(doi: String): PaperDocument? {
         val response = webClient.get()
             .uri { builder -> buildDoiUri(doi, builder) }
             .retrieve()
@@ -94,8 +96,9 @@ class CrossrefClient(
             .bodyToMono(CrossrefSingleResponse::class.java)
             .awaitSingleOrNull()
 
-        return response?.message?.toPaper()
+        return response?.message?.toPaperDocument()
     }
+
 
     /**
      * 🔹 검색 URI 생성 책임 분리
